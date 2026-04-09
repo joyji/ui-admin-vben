@@ -30,6 +30,38 @@ function ok<T>(data: T): OfflineMockResponse<T> {
   };
 }
 
+function buildPageResult() {
+  return {
+    list: [],
+    total: 0,
+  };
+}
+
+function isCommonReadEndpoint(method: string, url: string) {
+  if (method !== 'GET') {
+    return false;
+  }
+  return (
+    url.endsWith('/page') ||
+    url.endsWith('/list') ||
+    url.endsWith('/get') ||
+    url.endsWith('/get-page')
+  );
+}
+
+function isCommonWriteEndpoint(method: string, url: string) {
+  if (method === 'POST') {
+    return /\/(create|save|add|submit)$/.test(url);
+  }
+  if (method === 'PUT') {
+    return /\/(update|edit)$/.test(url);
+  }
+  if (method === 'DELETE') {
+    return /\/(delete|remove|batch-delete|delete-list)$/.test(url);
+  }
+  return false;
+}
+
 function getPermissionInfo(): AuthPermissionInfo {
   return {
     menus: accessRoutes as any,
@@ -124,6 +156,17 @@ function resolveOfflineMock(
       normalizedUrl.endsWith('/list-all-simple'))
   ) {
     return ok([]);
+  }
+  // 高频列表查询兜底：分页、列表、详情查询
+  if (isCommonReadEndpoint(normalizedMethod, normalizedUrl)) {
+    if (normalizedUrl.endsWith('/get')) {
+      return ok({});
+    }
+    return ok(buildPageResult());
+  }
+  // 高频写接口兜底：新增、更新、删除返回成功
+  if (isCommonWriteEndpoint(normalizedMethod, normalizedUrl)) {
+    return ok(true);
   }
   return null;
 }
