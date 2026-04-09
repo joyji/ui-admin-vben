@@ -75,6 +75,14 @@ const routes: RouteRecordRaw[] = [
           title: '文件管理',
         },
       },
+      {
+        path: '/infra/perf/tab-form-linkage',
+        name: 'OfflineInfraPerfTabFormLinkage',
+        component: () => import('#/views/infra/perf/tab-form-linkage/index.vue'),
+        meta: {
+          title: '联动压测页',
+        },
+      },
     ],
   },
   {

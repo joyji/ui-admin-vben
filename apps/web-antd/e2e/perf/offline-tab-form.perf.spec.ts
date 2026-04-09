@@ -105,6 +105,46 @@ async function writeReport(
   });
 }
 
+async function fillLinkageFormAndMeasure(
+  page: Parameters<typeof test>[0]['page'],
+  metrics: PerfMetric[],
+  rounds: number,
+) {
+  await openByHash(page, metrics, '/infra/perf/tab-form-linkage');
+  const tab1FieldA = page.getByTestId('tab1-field-a');
+  const tab1FieldB = page.getByTestId('tab1-field-b');
+  const tab2FieldA = page.getByTestId('tab2-field-a');
+  const tab2FieldB = page.getByTestId('tab2-field-b');
+  const globalMirror = page.getByTestId('global-mirror');
+
+  await expect(tab1FieldA).toBeVisible();
+  await expect(tab2FieldA).toBeVisible();
+
+  for (let i = 0; i < rounds; i++) {
+    const inputValue = `linkage-${i}-${LARGE_TEXT.slice(0, 80)}`;
+    await markStep(
+      metrics,
+      'linkage-input-tab1',
+      async () => {
+        await tab1FieldA.fill(inputValue);
+      },
+      'tab1.fieldA',
+    );
+
+    await markStep(
+      metrics,
+      'linkage-propagation-check',
+      async () => {
+        await expect(tab1FieldB).toHaveValue(inputValue.toUpperCase());
+        await expect(tab2FieldA).toHaveValue(inputValue);
+        await expect(tab2FieldB).toHaveValue(inputValue.toUpperCase());
+        await expect(globalMirror).toHaveValue(inputValue.toUpperCase());
+      },
+      'tab-cross-form',
+    );
+  }
+}
+
 test.describe('web-antd offline tab/form performance', () => {
   test('10+ tab scene', async ({ page }) => {
     const metrics: PerfMetric[] = [];
@@ -129,6 +169,7 @@ test.describe('web-antd offline tab/form performance', () => {
     }
 
     await fillUserSearchForm(page, metrics, 30);
+    await fillLinkageFormAndMeasure(page, metrics, 20);
 
     for (let i = 0; i < 15; i++) {
       await switchTab(page, metrics, '用户管理');
@@ -172,6 +213,7 @@ test.describe('web-antd offline tab/form performance', () => {
     }
 
     await fillUserSearchForm(page, metrics, 60);
+    await fillLinkageFormAndMeasure(page, metrics, 40);
 
     for (let i = 0; i < 30; i++) {
       await switchTab(page, metrics, '用户管理');
