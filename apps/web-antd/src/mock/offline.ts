@@ -12,6 +12,139 @@ type OfflineMockResponse<T = any> = {
 
 const OFFLINE_TOKEN = 'offline-mock-access-token';
 const OFFLINE_REFRESH_TOKEN = 'offline-mock-refresh-token';
+const now = new Date().toISOString();
+
+const demoUserList = [
+  {
+    id: 1,
+    username: 'admin',
+    nickname: '管理员',
+    deptId: 1,
+    deptName: '总经办',
+    email: 'admin@example.com',
+    mobile: '13800000000',
+    status: 0,
+    createTime: now,
+  },
+];
+
+const demoRoleList = [
+  {
+    id: 1,
+    name: '超级管理员',
+    code: 'super_admin',
+    sort: 1,
+    status: 0,
+    createTime: now,
+  },
+];
+
+const demoDeptList = [
+  {
+    id: 1,
+    name: '总经办',
+    parentId: 0,
+  },
+];
+
+const demoDictTypeList = [
+  {
+    id: 1,
+    name: '用户状态',
+    type: 'common_status',
+    status: 0,
+    remark: '离线演示字典',
+    createTime: now,
+  },
+];
+
+const demoDictDataList = [
+  {
+    id: 1,
+    dictType: 'common_status',
+    label: '开启',
+    value: '0',
+    status: 0,
+    sort: 1,
+  },
+  {
+    id: 2,
+    dictType: 'common_status',
+    label: '关闭',
+    value: '1',
+    status: 0,
+    sort: 2,
+  },
+];
+
+const demoTenantList = [
+  {
+    id: 1,
+    name: '默认租户',
+    contactName: '管理员',
+    status: 0,
+    createTime: now,
+  },
+];
+
+const demoJobList = [
+  {
+    id: 1,
+    name: '离线演示任务',
+    status: 1,
+    invokeTarget: 'demoTask.run',
+    cronExpression: '0/30 * * * * ?',
+    createTime: now,
+  },
+];
+
+const demoConfigList = [
+  {
+    id: 1,
+    category: 'sys',
+    name: '系统名称',
+    key: 'sys.name',
+    value: '离线演示系统',
+    type: true,
+    createTime: now,
+  },
+];
+
+const demoCustomerList = [
+  {
+    id: 1,
+    name: '离线演示客户',
+    mobile: '13900000000',
+    industryId: 1,
+    level: 1,
+    ownerUserName: '管理员',
+    createTime: now,
+  },
+];
+
+const demoContractList = [
+  {
+    id: 1,
+    no: 'HT20260001',
+    name: '离线演示合同',
+    customerName: '离线演示客户',
+    totalPrice: 10000,
+    auditStatus: 20,
+    createTime: now,
+  },
+];
+
+const demoBusinessList = [
+  {
+    id: 1,
+    name: '离线演示商机',
+    customerName: '离线演示客户',
+    statusTypeId: 1,
+    statusId: 1,
+    price: 20000,
+    createTime: now,
+  },
+];
 
 const offlineUser: AuthPermissionInfo['user'] = {
   avatar: '',
@@ -118,11 +251,27 @@ function mockRefreshToken() {
 }
 
 const offlineHandlers: Record<string, () => OfflineMockResponse<any>> = {
-  'GET /system/dict-data/simple-list': () => ok([]),
-  'GET /system/dict-type/list-all-simple': () => ok([]),
+  'GET /system/dict-data/page': () => ok({ list: demoDictDataList, total: 2 }),
+  'GET /system/dict-data/simple-list': () => ok(demoDictDataList),
+  'GET /system/dict-type/page': () => ok({ list: demoDictTypeList, total: 1 }),
+  'GET /system/dict-type/list-all-simple': () => ok(demoDictTypeList),
   'GET /system/auth/get-permission-info': () => ok(getPermissionInfo()),
+  'GET /system/dept/list': () => ok(demoDeptList),
+  'GET /system/dept/simple-list': () => ok(demoDeptList),
+  'GET /system/menu/list': () => ok(getPermissionInfo().menus),
+  'GET /system/menu/simple-list': () => ok(getPermissionInfo().menus),
+  'GET /system/role/page': () => ok({ list: demoRoleList, total: 1 }),
+  'GET /system/role/simple-list': () => ok(demoRoleList),
   'GET /system/tenant/get-by-website': () => ok(mockGetTenantByWebsite()),
   'GET /system/tenant/simple-list': () => ok(mockTenantSimpleList()),
+  'GET /system/tenant/page': () => ok({ list: demoTenantList, total: 1 }),
+  'GET /system/user/page': () => ok({ list: demoUserList, total: 1 }),
+  'GET /system/user/simple-list': () => ok(demoUserList),
+  'GET /infra/job/page': () => ok({ list: demoJobList, total: 1 }),
+  'GET /infra/config/page': () => ok({ list: demoConfigList, total: 1 }),
+  'GET /crm/business/page': () => ok({ list: demoBusinessList, total: 1 }),
+  'GET /crm/contract/page': () => ok({ list: demoContractList, total: 1 }),
+  'GET /crm/customer/page': () => ok({ list: demoCustomerList, total: 1 }),
   'POST /system/auth/login': () => ok(mockLogin()),
   'POST /system/auth/logout': () => ok(true),
   'POST /system/auth/refresh-token': () => ok(mockRefreshToken()),
