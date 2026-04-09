@@ -86,6 +86,8 @@ function mockRefreshToken() {
 }
 
 const offlineHandlers: Record<string, () => OfflineMockResponse<any>> = {
+  'GET /system/dict-data/simple-list': () => ok([]),
+  'GET /system/dict-type/list-all-simple': () => ok([]),
   'GET /system/auth/get-permission-info': () => ok(getPermissionInfo()),
   'GET /system/tenant/get-by-website': () => ok(mockGetTenantByWebsite()),
   'GET /system/tenant/simple-list': () => ok(mockTenantSimpleList()),
@@ -108,9 +110,22 @@ function resolveOfflineMock(
   method: string,
   url: string,
 ): null | OfflineMockResponse<any> {
-  const key = buildRouteKey(method, url);
+  const normalizedMethod = method.toUpperCase();
+  const normalizedUrl = normalizeUrl(url);
+  const key = `${normalizedMethod} ${normalizedUrl}`;
   const handler = offlineHandlers[key];
-  return handler ? handler() : null;
+  if (handler) {
+    return handler();
+  }
+  // 高频基础查询兜底：simple-list/list-all-simple 默认返回空数组
+  if (
+    normalizedMethod === 'GET' &&
+    (normalizedUrl.endsWith('/simple-list') ||
+      normalizedUrl.endsWith('/list-all-simple'))
+  ) {
+    return ok([]);
+  }
+  return null;
 }
 
 function buildUnmockedOfflineError(method: string, url: string) {
