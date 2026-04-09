@@ -9,9 +9,16 @@ export const overridesPreferences = defineOverridesPreferences({
   // overrides
   app: {
     /** 后端路由模式 */
-    accessMode: 'backend',
+    accessMode:
+      import.meta.env.DEV &&
+      String(import.meta.env.VITE_OFFLINE_MOCK).toLowerCase() === 'true'
+        ? 'frontend'
+        : 'backend',
     name: import.meta.env.VITE_APP_TITLE,
     enableRefreshToken: true,
+  },
+  theme: {
+    mode: 'light',
   },
   footer: {
     /** 默认关闭 footer 页脚，因为有一定遮挡 */

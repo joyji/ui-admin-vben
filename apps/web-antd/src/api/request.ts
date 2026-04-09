@@ -17,6 +17,11 @@ import { createApiEncrypt } from '@vben/utils';
 import { message } from 'ant-design-vue';
 
 import { useAuthStore } from '#/store';
+import {
+  buildUnmockedOfflineError,
+  resolveOfflineMock,
+  shouldUseOfflineMock,
+} from '#/mock/offline';
 
 import { refreshTokenApi } from './core';
 
@@ -123,6 +128,35 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
         }
       }
       return response;
+    },
+    rejected: (error) => {
+      if (!shouldUseOfflineMock()) {
+        return Promise.reject(error);
+      }
+      const method = error?.config?.method;
+      const url = error?.config?.url;
+      if (!method || !url) {
+        return Promise.reject(error);
+      }
+      const mocked = resolveOfflineMock(method, url);
+      if (!mocked) {
+        return Promise.reject({
+          ...error,
+          data: buildUnmockedOfflineError(method, url),
+          response: {
+            data: buildUnmockedOfflineError(method, url),
+            status: 501,
+          },
+        });
+      }
+      return Promise.resolve({
+        config: error.config,
+        data: mocked,
+        headers: {},
+        request: error.request,
+        status: 200,
+        statusText: 'OK',
+      });
     },
   });
 
