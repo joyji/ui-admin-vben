@@ -110,6 +110,17 @@ const demoConfigList = [
   },
 ];
 
+const demoFileList = [
+  {
+    id: 1,
+    name: 'offline-demo.txt',
+    path: '/offline-demo.txt',
+    size: 1024,
+    type: 'txt',
+    createTime: now,
+  },
+];
+
 const demoCustomerList = [
   {
     id: 1,
@@ -256,6 +267,7 @@ const offlineHandlers: Record<string, () => OfflineMockResponse<any>> = {
   'GET /system/dict-type/page': () => ok({ list: demoDictTypeList, total: 1 }),
   'GET /system/dict-type/list-all-simple': () => ok(demoDictTypeList),
   'GET /system/auth/get-permission-info': () => ok(getPermissionInfo()),
+  'GET /system/area/tree': () => ok([]),
   'GET /system/dept/list': () => ok(demoDeptList),
   'GET /system/dept/simple-list': () => ok(demoDeptList),
   'GET /system/menu/list': () => ok(getPermissionInfo().menus),
@@ -268,10 +280,28 @@ const offlineHandlers: Record<string, () => OfflineMockResponse<any>> = {
   'GET /system/user/page': () => ok({ list: demoUserList, total: 1 }),
   'GET /system/user/simple-list': () => ok(demoUserList),
   'GET /infra/job/page': () => ok({ list: demoJobList, total: 1 }),
+  'GET /infra/job-log/page': () => ok({ list: [], total: 0 }),
+  'GET /infra/file/page': () => ok({ list: demoFileList, total: 1 }),
   'GET /infra/config/page': () => ok({ list: demoConfigList, total: 1 }),
+  'GET /infra/data-source-config/list': () => ok([]),
+  'GET /infra/file-config/page': () => ok({ list: [], total: 0 }),
+  'GET /infra/api-access-log/page': () => ok({ list: [], total: 0 }),
+  'GET /infra/api-error-log/page': () => ok({ list: [], total: 0 }),
   'GET /crm/business/page': () => ok({ list: demoBusinessList, total: 1 }),
+  'GET /crm/business/simple-all-list': () => ok(demoBusinessList),
   'GET /crm/contract/page': () => ok({ list: demoContractList, total: 1 }),
+  'GET /crm/contract/simple-list': () => ok(demoContractList),
   'GET /crm/customer/page': () => ok({ list: demoCustomerList, total: 1 }),
+  'GET /crm/customer/simple-list': () => ok(demoCustomerList),
+  'GET /crm/contact/page': () => ok({ list: [], total: 0 }),
+  'GET /crm/product/page': () => ok({ list: [], total: 0 }),
+  'GET /crm/product/simple-list': () => ok([]),
+  'GET /crm/receivable/page': () => ok({ list: [], total: 0 }),
+  'GET /crm/receivable-plan/page': () => ok({ list: [], total: 0 }),
+  'GET /crm/receivable-plan/simple-list': () => ok([]),
+  'GET /crm/follow-up-record/page': () => ok({ list: [], total: 0 }),
+  'GET /system/notify-message/get-unread-list': () => ok([]),
+  'GET /system/notify-message/get-unread-count': () => ok(0),
   'POST /system/auth/login': () => ok(mockLogin()),
   'POST /system/auth/logout': () => ok(true),
   'POST /system/auth/refresh-token': () => ok(mockRefreshToken()),
@@ -303,6 +333,26 @@ function resolveOfflineMock(
     normalizedMethod === 'GET' &&
     (normalizedUrl.endsWith('/simple-list') ||
       normalizedUrl.endsWith('/list-all-simple'))
+  ) {
+    return ok([]);
+  }
+  // 通用统计类兜底：count数量接口
+  if (
+    normalizedMethod === 'GET' &&
+    /\/(count|remind-count|audit-count|follow-count|get-unread-count)$/.test(
+      normalizedUrl,
+    )
+  ) {
+    return ok(0);
+  }
+  // 通用树形兜底：tree接口
+  if (normalizedMethod === 'GET' && normalizedUrl.endsWith('/tree')) {
+    return ok([]);
+  }
+  // 通用扩展查询兜底：get-by-*、list-by-*
+  if (
+    normalizedMethod === 'GET' &&
+    (normalizedUrl.includes('/get-by-') || normalizedUrl.includes('/list-by-'))
   ) {
     return ok([]);
   }
