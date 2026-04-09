@@ -157,6 +157,38 @@ const demoBusinessList = [
   },
 ];
 
+const demoUserProfile = {
+  dept: {
+    id: 1,
+    name: '总经办',
+  },
+  postIds: [1],
+  posts: [
+    {
+      id: 1,
+      name: '系统管理员',
+    },
+  ],
+  roles: [
+    {
+      id: 1,
+      name: '超级管理员',
+    },
+  ],
+  user: {
+    avatar: '',
+    createTime: now,
+    deptId: 1,
+    email: 'admin@example.com',
+    id: 1,
+    mobile: '13800000000',
+    nickname: '离线演示账号',
+    sex: 1,
+    status: 0,
+    username: 'admin',
+  },
+};
+
 const offlineUser: AuthPermissionInfo['user'] = {
   avatar: '',
   homePath: '/analytics',
@@ -267,6 +299,7 @@ const offlineHandlers: Record<string, () => OfflineMockResponse<any>> = {
   'GET /system/dict-type/page': () => ok({ list: demoDictTypeList, total: 1 }),
   'GET /system/dict-type/list-all-simple': () => ok(demoDictTypeList),
   'GET /system/auth/get-permission-info': () => ok(getPermissionInfo()),
+  'GET /system/user/profile/get': () => ok(demoUserProfile),
   'GET /system/area/tree': () => ok([]),
   'GET /system/dept/list': () => ok(demoDeptList),
   'GET /system/dept/simple-list': () => ok(demoDeptList),
@@ -302,6 +335,8 @@ const offlineHandlers: Record<string, () => OfflineMockResponse<any>> = {
   'GET /crm/follow-up-record/page': () => ok({ list: [], total: 0 }),
   'GET /system/notify-message/get-unread-list': () => ok([]),
   'GET /system/notify-message/get-unread-count': () => ok(0),
+  'GET /system/permission/list-role-menus': () => ok([1]),
+  'GET /system/permission/list-user-roles': () => ok([1]),
   'POST /system/auth/login': () => ok(mockLogin()),
   'POST /system/auth/logout': () => ok(true),
   'POST /system/auth/refresh-token': () => ok(mockRefreshToken()),
@@ -323,6 +358,14 @@ function resolveOfflineMock(
 ): null | OfflineMockResponse<any> {
   const normalizedMethod = method.toUpperCase();
   const normalizedUrl = normalizeUrl(url);
+  const queryKey = buildRouteKey(
+    normalizedMethod,
+    `${normalizedUrl}${url.includes('?') ? url.slice(url.indexOf('?')) : ''}`,
+  );
+  const queryHandler = offlineHandlers[queryKey];
+  if (queryHandler) {
+    return queryHandler();
+  }
   const key = `${normalizedMethod} ${normalizedUrl}`;
   const handler = offlineHandlers[key];
   if (handler) {
