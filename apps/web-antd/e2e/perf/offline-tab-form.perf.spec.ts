@@ -9,6 +9,13 @@ type PerfMetric = {
   target?: string;
 };
 
+type PerfSnapshot = {
+  jsHeapLimit?: number;
+  totalJSHeapSize?: number;
+  usedJSHeapSize?: number;
+  longTaskCount: number;
+};
+
 async function markStep<T>(
   metrics: PerfMetric[],
   action: string,
@@ -85,6 +92,8 @@ async function writeReport(
   page: Parameters<typeof test>[0]['page'],
   metrics: PerfMetric[],
   scenario: string,
+  beforeSnapshot: PerfSnapshot,
+  afterSnapshot: PerfSnapshot,
 ) {
   const sum = metrics.reduce((acc, item) => acc + item.elapsedMs, 0);
   const p95 = [...metrics]
@@ -97,11 +106,55 @@ async function writeReport(
     totalActions: metrics.length,
     totalElapsedMs: sum,
     p95ElapsedMs: p95 ?? 0,
+    memoryAndMainThread: {
+      before: beforeSnapshot,
+      after: afterSnapshot,
+      deltaUsedJSHeapSize:
+        (afterSnapshot.usedJSHeapSize ?? 0) - (beforeSnapshot.usedJSHeapSize ?? 0),
+      deltaLongTaskCount:
+        afterSnapshot.longTaskCount - beforeSnapshot.longTaskCount,
+    },
     metrics,
   };
   await test.info().attach(`${scenario}-report.json`, {
     body: JSON.stringify(payload, null, 2),
     contentType: 'application/json',
+  });
+}
+
+async function installLongTaskObserver(
+  page: Parameters<typeof test>[0]['page'],
+) {
+  await page.addInitScript(() => {
+    (window as any).__perfLongTaskCount = 0;
+    if (!('PerformanceObserver' in window)) {
+      return;
+    }
+    try {
+      const observer = new PerformanceObserver((list) => {
+        const entries = list.getEntries() || [];
+        (window as any).__perfLongTaskCount += entries.length;
+      });
+      observer.observe({ type: 'longtask', buffered: true });
+    } catch {
+      // 某些浏览器/上下文可能不支持 longtask，忽略即可
+    }
+  });
+}
+
+async function collectSnapshot(
+  page: Parameters<typeof test>[0]['page'],
+): Promise<PerfSnapshot> {
+  return await page.evaluate(() => {
+    const perfAny = performance as any;
+    const memory = perfAny.memory || {};
+    const longTaskCount = (window as any).__perfLongTaskCount ?? 0;
+    return {
+      jsHeapLimit: memory.jsHeapSizeLimit,
+      totalJSHeapSize: memory.totalJSHeapSize,
+      usedJSHeapSize: memory.usedJSHeapSize,
+      longTaskCount,
+    };
   });
 }
 
@@ -148,7 +201,9 @@ async function fillLinkageFormAndMeasure(
 test.describe('web-antd offline tab/form performance', () => {
   test('10+ tab scene', async ({ page }) => {
     const metrics: PerfMetric[] = [];
+    await installLongTaskObserver(page);
     await login(page);
+    const beforeSnapshot = await collectSnapshot(page);
 
     const routes = [
       '/analytics',
@@ -177,12 +232,21 @@ test.describe('web-antd offline tab/form performance', () => {
       await switchTab(page, metrics, '客户管理');
     }
 
-    await writeReport(page, metrics, 'tabs-10-plus');
+    const afterSnapshot = await collectSnapshot(page);
+    await writeReport(
+      page,
+      metrics,
+      'tabs-10-plus',
+      beforeSnapshot,
+      afterSnapshot,
+    );
   });
 
   test('20 tab stress scene', async ({ page }) => {
     const metrics: PerfMetric[] = [];
+    await installLongTaskObserver(page);
     await login(page);
+    const beforeSnapshot = await collectSnapshot(page);
 
     const routes = [
       '/analytics',
@@ -222,6 +286,13 @@ test.describe('web-antd offline tab/form performance', () => {
       await switchTab(page, metrics, '合同管理');
     }
 
-    await writeReport(page, metrics, 'tabs-20-stress');
+    const afterSnapshot = await collectSnapshot(page);
+    await writeReport(
+      page,
+      metrics,
+      'tabs-20-stress',
+      beforeSnapshot,
+      afterSnapshot,
+    );
   });
 });
