@@ -1,21 +1,21 @@
 <script lang="ts" setup>
 /**
- * BizFormFooter — 表单底部操作栏
+ * RoFormFooter — 表单底部操作栏
  *
  * sticky 定位，白底，顶部分割线，居中排布按钮。
  * 暴露具名插槽，按钮顺序从左到右：取消 → 弱操作 → 次级 → 主操作。
  *
  * 最简用法：
- *   <BizFormFooter @cancel="handleCancel" @submit="handleSubmit" />
+ *   <RoFormFooter @cancel="handleCancel" @submit="handleSubmit" />
  *
  * 完整用法（自定义按钮）：
- *   <BizFormFooter>
+ *   <RoFormFooter>
  *     <template #start>
  *       <a-button class="ant-btn-back">退回</a-button>
  *     </template>
  *     <a-button @click="handleSave">保存</a-button>
  *     <a-button type="primary" @click="handleSubmit">提交</a-button>
- *   </BizFormFooter>
+ *   </RoFormFooter>
  */
 
 const emit = defineEmits<{

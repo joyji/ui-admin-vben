@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 /**
- * BizFormGroup — 表单折叠分组
+ * RoFormGroup — 表单折叠分组
  *
  * 封装了 pc-biz 规范的 Collapse 样式：
  *   - header 左侧 4px 主色边框
@@ -10,17 +10,17 @@
  *   - label 垂直居中
  *
  * 用法：
- *   <BizFormGroup title="基本信息">
+ *   <RoFormGroup title="基本信息">
  *     <Form />
- *   </BizFormGroup>
+ *   </RoFormGroup>
  *
  *   <!-- 多分组 -->
- *   <BizFormGroup title="基本信息" :default-open="true">
+ *   <RoFormGroup title="基本信息" :default-open="true">
  *     <Form />
- *   </BizFormGroup>
- *   <BizFormGroup title="风险信息">
+ *   </RoFormGroup>
+ *   <RoFormGroup title="风险信息">
  *     <slot />
- *   </BizFormGroup>
+ *   </RoFormGroup>
  */
 
 withDefaults(

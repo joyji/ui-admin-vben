@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 /**
- * BizFormPage — 表单/详情页标准容器
+ * RoFormPage — 表单/详情页标准容器
  *
  * 将页面级布局规范完全固化：
- *   - <Page> + 页头标题 + 右上角 <BizActionBar>
+ *   - <Page> + 页头标题 + 右上角 <RoActionBar>
  *   - 内容区：px-4 py-3，flex-col gap-3
- *   - 自动支持多个 <BizFormGroup> 分组
- *   - 底部 <BizFormFooter> sticky 操作栏
+ *   - 自动支持多个 <RoFormGroup> 分组
+ *   - 底部 <RoFormFooter> sticky 操作栏
  *
  * 业务页面使用时 0 CSS：
  *
- *   <BizFormPage
+ *   <RoFormPage
  *     title="项目授信流程-江苏医疗器械有限公司"
  *     :loading="loading"
  *     :show-back="true"
@@ -24,24 +24,24 @@
  *     </template>
  *
  *     <!-- 表单分组（一个或多个） -->
- *     <BizFormGroup title="基本信息">
+ *     <RoFormGroup title="基本信息">
  *       <Form />
- *     </BizFormGroup>
- *     <BizFormGroup title="风险信息">
+ *     </RoFormGroup>
+ *     <RoFormGroup title="风险信息">
  *       <RiskForm />
- *     </BizFormGroup>
+ *     </RoFormGroup>
  *
  *     <!-- 底部操作栏附加按钮（可选） -->
  *     <template #footer-start>
  *       <a-button @click="handleReject">否决</a-button>
  *     </template>
- *   </BizFormPage>
+ *   </RoFormPage>
  */
 
 import { Page } from '@vben/common-ui';
 
-import BizActionBar from '../action-bar/index.vue';
-import BizFormFooter from '../form-footer/index.vue';
+import RoActionBar from '../action-bar/index.vue';
+import RoFormFooter from '../form-footer/index.vue';
 
 const emit = defineEmits<{
   back: [];
@@ -98,7 +98,7 @@ withDefaults(
   <Page auto-content-height>
     <!-- ───── 页头右侧按钮 ───── -->
     <template v-if="title || $slots['header-extra'] || showBack || showReset || showHeaderSave || showHeaderSubmit" #extra>
-      <BizActionBar
+      <RoActionBar
         :show-back="showBack"
         :show-reset="showReset"
         :show-save="showHeaderSave"
@@ -121,16 +121,16 @@ withDefaults(
         <template v-if="$slots['header-append']" #append>
           <slot name="header-append" />
         </template>
-      </BizActionBar>
+      </RoActionBar>
     </template>
 
     <!-- ───── 主内容 ───── -->
     <div class="biz-form-page__body">
-      <!-- 分组/表单内容（放 BizFormGroup 或直接放 Form） -->
+      <!-- 分组/表单内容（放 RoFormGroup 或直接放 Form） -->
       <slot />
 
       <!-- ───── 底部操作栏 ───── -->
-      <BizFormFooter
+      <RoFormFooter
         :visible="showFooter"
         :show-cancel="showFooterCancel"
         :show-save="showFooterSave"
@@ -152,7 +152,7 @@ withDefaults(
         <template v-if="$slots['footer-end']" #end>
           <slot name="footer-end" />
         </template>
-      </BizFormFooter>
+      </RoFormFooter>
     </div>
   </Page>
 </template>

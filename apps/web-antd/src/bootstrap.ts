@@ -17,7 +17,7 @@ import { initComponentAdapter } from './adapter/component';
 import { initSetupVbenForm } from './adapter/form';
 import App from './app.vue';
 import { router } from './router';
-import { BizActionBar, BizFormFooter, BizFormGroup, BizFormPage } from './components/biz';
+import { RoActionBar, RoFormFooter, RoFormGroup, RoFormPage } from './components/ro';
 
 async function bootstrap(namespace: string) {
   // 初始化组件适配器
@@ -38,11 +38,11 @@ async function bootstrap(namespace: string) {
   const app = createApp(App);
   app.use(VueDOMPurifyHTML);
 
-  // 全局注册 Biz 标准 UI 组件（零样式编写，直接在模板中使用）
-  app.component('BizFormPage', BizFormPage);
-  app.component('BizFormGroup', BizFormGroup);
-  app.component('BizFormFooter', BizFormFooter);
-  app.component('BizActionBar', BizActionBar);
+  // 全局注册 Ro 标准 UI 组件（零样式编写，直接在模板中使用）
+  app.component('RoFormPage', RoFormPage);
+  app.component('RoFormGroup', RoFormGroup);
+  app.component('RoFormFooter', RoFormFooter);
+  app.component('RoActionBar', RoActionBar);
 
   // 注册v-loading指令
   registerLoadingDirective(app, {

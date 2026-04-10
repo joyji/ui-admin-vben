@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 /**
- * BizActionBar — 页头操作按钮组
+ * RoActionBar — 页头操作按钮组
  *
  * 封装了视觉手册的三级按钮规范：
  *   弱（返回/重置）→ 次级（保存）→ 强（提交）
@@ -9,7 +9,7 @@
  * 最简用法（快捷 emit）：
  *   <Page>
  *     <template #extra>
- *       <BizActionBar
+ *       <RoActionBar
  *         :show-back="true"
  *         :loading="loading"
  *         @back="handleBack"
@@ -20,10 +20,10 @@
  *   </Page>
  *
  * 自定义按钮：
- *   <BizActionBar>
+ *   <RoActionBar>
  *     <a-button @click="handleProcess">征求意见</a-button>
  *     <a-button type="primary" @click="handleSubmit">提交</a-button>
- *   </BizActionBar>
+ *   </RoActionBar>
  */
 
 const emit = defineEmits<{

@@ -333,7 +333,7 @@ const [Modal, modalApi] = useVbenModal({
 
 ---
 
-## 八、BizFormPage 标准组件（0 CSS 生成页面）
+## 八、RoFormPage 标准组件（0 CSS 生成页面）
 
 这是最关键的规范：**业务页面无需写任何 CSS**，只需使用以下 4 个全局注册组件。
 
@@ -341,12 +341,12 @@ const [Modal, modalApi] = useVbenModal({
 
 | 组件 | 职责 |
 |---|---|
-| `<BizFormPage>` | 页面容器：页头标题 + 右上角按钮栏 + 内容区 + 底部 sticky 操作栏 |
-| `<BizFormGroup>` | 折叠分组：左侧主色边框、标题、展开/收起 |
-| `<BizFormFooter>` | 底部 sticky 操作栏（单独使用时） |
-| `<BizActionBar>` | 页头右侧按钮组（单独使用时） |
+| `<RoFormPage>` | 页面容器：页头标题 + 右上角按钮栏 + 内容区 + 底部 sticky 操作栏 |
+| `<RoFormGroup>` | 折叠分组：左侧主色边框、标题、展开/收起 |
+| `<RoFormFooter>` | 底部 sticky 操作栏（单独使用时） |
+| `<RoActionBar>` | 页头右侧按钮组（单独使用时） |
 
-### BizFormPage Props
+### RoFormPage Props
 
 | Prop | 类型 | 默认 | 说明 |
 |---|---|---|---|
@@ -363,19 +363,19 @@ const [Modal, modalApi] = useVbenModal({
 | `submitText` | string | '提交' | 提交按钮文案 |
 | `saveText` | string | '保存' | 保存按钮文案 |
 
-### BizFormPage Slots
+### RoFormPage Slots
 
 | 插槽名 | 说明 |
 |---|---|
 | `header-prepend` | 页头左侧附加按钮（流程图等） |
 | `header-extra` | 页头中央附加按钮（征求意见等） |
 | `header-append` | 页头右侧危险操作（否决/作废） |
-| `default` | 主内容（放 `<BizFormGroup>` 或直接放 `<Form>`） |
+| `default` | 主内容（放 `<RoFormGroup>` 或直接放 `<Form>`） |
 | `footer-start` | 底部左侧弱操作（退回修改等） |
 | `footer` | 完全自定义底部按钮 |
 | `footer-end` | 底部右侧附加按钮 |
 
-### BizFormPage Events
+### RoFormPage Events
 
 | 事件 | 说明 |
 |---|---|
@@ -388,7 +388,7 @@ const [Modal, modalApi] = useVbenModal({
 
 ```vue
 <template>
-  <BizFormPage
+  <RoFormPage
     title="项目授信流程"
     :loading="loading"
     :show-back="true"
@@ -396,10 +396,10 @@ const [Modal, modalApi] = useVbenModal({
     @save="handleSave"
     @submit="handleSubmit"
   >
-    <BizFormGroup title="基本信息">
+    <RoFormGroup title="基本信息">
       <Form />
-    </BizFormGroup>
-  </BizFormPage>
+    </RoFormGroup>
+  </RoFormPage>
 </template>
 ```
 
@@ -407,7 +407,7 @@ const [Modal, modalApi] = useVbenModal({
 
 ```vue
 <template>
-  <BizFormPage
+  <RoFormPage
     title="项目授信流程-江苏医疗器械有限公司"
     :loading="loading"
     :show-back="true"
@@ -428,22 +428,22 @@ const [Modal, modalApi] = useVbenModal({
     </template>
 
     <!-- 多个折叠分组 -->
-    <BizFormGroup title="基本信息">
+    <RoFormGroup title="基本信息">
       <BaseForm />
-    </BizFormGroup>
-    <BizFormGroup title="风险敞口信息" :default-open="false">
+    </RoFormGroup>
+    <RoFormGroup title="风险敞口信息" :default-open="false">
       <RiskForm />
-    </BizFormGroup>
+    </RoFormGroup>
 
     <!-- 底部左侧弱操作 -->
     <template #footer-start>
       <a-button class="ant-btn-back">退回修改</a-button>
     </template>
-  </BizFormPage>
+  </RoFormPage>
 </template>
 ```
 
-### BizFormGroup Props
+### RoFormGroup Props
 
 | Prop | 类型 | 默认 | 说明 |
 |---|---|---|---|
@@ -453,16 +453,16 @@ const [Modal, modalApi] = useVbenModal({
 
 ---
 
-## 九、AI 生成 Prompt（加入 Biz 组件后）
+## 九、AI 生成 Prompt（加入 Ro 组件后）
 
 ### index.vue 生成 Prompt（新版：0 CSS）
 
 ```
 你是熟悉 Vben Admin 5.x 的前端工程师。
-页面使用全局注册的 BizFormPage + BizFormGroup，无需写任何 CSS。
+页面使用全局注册的 RoFormPage + RoFormGroup，无需写任何 CSS。
 
 【模板】
-<BizFormPage
+<RoFormPage
   title="<页面标题>"
   :loading="loading"
   :show-back="true"
@@ -477,21 +477,21 @@ const [Modal, modalApi] = useVbenModal({
   </template>
 
   <!-- 一个或多个分组 -->
-  <BizFormGroup title="基本信息">
+  <RoFormGroup title="基本信息">
     <Form />
-  </BizFormGroup>
+  </RoFormGroup>
 
   <!-- 底部左侧弱操作（可选） -->
   <template #footer-start>
     <a-button class="ant-btn-back">退回</a-button>
   </template>
-</BizFormPage>
+</RoFormPage>
 
 【禁止】
 - 不写任何 <style> 块
 - 不写 padding、sticky、border 等布局样式
-- 不手动写 <a-collapse>（用 BizFormGroup 替代）
-- 不手动写底部 sticky div（BizFormPage 已内置）
+- 不手动写 <a-collapse>（用 RoFormGroup 替代）
+- 不手动写底部 sticky div（RoFormPage 已内置）
 ```
 
 ## 十、Cursor Rule 配置（`.cursor/rules/form-skill.mdc`）
@@ -500,7 +500,7 @@ const [Modal, modalApi] = useVbenModal({
 
 ```markdown
 ---
-description: 表单代码生成规范（Vben Admin 5.x + antd + Biz 组件）
+description: 表单代码生成规范（Vben Admin 5.x + antd + Ro 组件）
 globs:
   - src/views/**/data.ts
   - src/views/**/form.vue
@@ -510,10 +510,10 @@ globs:
 生成表单代码时，严格遵守以下规范：
 
 【页面容器】
-- 使用全局注册的 BizFormPage + BizFormGroup，不写任何 <style> 块
+- 使用全局注册的 RoFormPage + RoFormGroup，不写任何 <style> 块
 - 禁止手动写 padding/sticky/border 等布局类名
-- <BizFormPage> 处理页头、内容区、底部 sticky 操作栏
-- <BizFormGroup> 处理折叠分组（替代裸 <a-collapse>）
+- <RoFormPage> 处理页头、内容区、底部 sticky 操作栏
+- <RoFormGroup> 处理折叠分组（替代裸 <a-collapse>）
 
 【Schema 规范】
 - use<PageName>FormSchema()，导出自 data.ts

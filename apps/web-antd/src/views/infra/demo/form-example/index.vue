@@ -2,7 +2,7 @@
 /**
  * 项目授信信息 — 表单示例页（重写版）
  *
- * 使用 BizFormPage + BizFormGroup 后：
+ * 使用 RoFormPage + RoFormGroup 后：
  *   - 0 行 CSS（无 <style> 块）
  *   - 无需写任何布局类名（sticky、padding、border 等全部在组件内）
  *   - 只关注业务逻辑：字段定义 + API 调用 + 事件处理
@@ -65,13 +65,13 @@ function handleBack() {
 
 <template>
   <!--
-    BizFormPage 全部搞定：
+    RoFormPage 全部搞定：
     - 页头标题 + 右上角按钮栏（showBack + showHeaderSubmit）
     - 主内容区 padding / flex / gap
     - 底部 sticky 操作栏（showFooter）
     无需写任何 CSS。
   -->
-  <BizFormPage
+  <RoFormPage
     title="项目授信流程-江苏医疗器械有限公司"
     :loading="loading"
     :show-back="true"
@@ -97,13 +97,13 @@ function handleBack() {
     </template>
 
     <!-- ── 基本信息分组 ── -->
-    <BizFormGroup title="基本信息">
+    <RoFormGroup title="基本信息">
       <Form />
-    </BizFormGroup>
+    </RoFormGroup>
 
     <!-- 底部左侧：弱操作按钮 -->
     <template #footer-start>
       <a-button class="ant-btn-back" @click="handleBack">退回修改</a-button>
     </template>
-  </BizFormPage>
+  </RoFormPage>
 </template>
