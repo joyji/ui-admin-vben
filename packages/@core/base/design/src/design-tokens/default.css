@@ -117,6 +117,81 @@
   /* Fill-6 强调/图标/特殊场景 #4E5969 */
   --fill-6: 213 15% 36%;
 
+  /* =============文字色体系 Text Color============= */
+  /* Text-5 强调/正文标题 #000000 90% */
+  --text-1: rgb(0 0 0 / 90%);
+  /* Text-4 次强调/正文标题 #000000 60% */
+  --text-2: rgb(0 0 0 / 60%);
+  /* Text-3 次要信息 #000000 40% */
+  --text-3: rgb(0 0 0 / 40%);
+  /* Text-2 置灰信息 #000000 16% */
+  --text-4: rgb(0 0 0 / 16%);
+  /* Text-1 纯白文字 #FFFFFF */
+  --text-white: #ffffff;
+
+  /* =============功能色完整序列============= */
+  /* Success */
+  --success-1: #e8ffea;
+  --success-2: #aff0b5;
+  --success-3: #7be188;
+  --success-5: #23c343;
+  --success-6: #00b42a;
+  --success-7: #009a29;
+  /* Warning */
+  --warning-1: #fff7e8;
+  --warning-2: #fff7e8;
+  --warning-3: #ffcf8b;
+  --warning-5: #ff9a2e;
+  --warning-6: #ff7d00;
+  --warning-7: #d25f00;
+  /* Error */
+  --error-1: #ffece8;
+  --error-2: #fdcdc5;
+  --error-3: #fbaca3;
+  --error-5: #f76560;
+  --error-6: #f53f3f;
+  --error-7: #cb2634;
+
+  /* =============页面级间距规范============= */
+  /* 间距序列 4 8 12 16 24 32 40 48 64 96 160 */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 40px;
+  --spacing-8: 48px;
+  --spacing-9: 64px;
+  --spacing-10: 96px;
+  --spacing-11: 160px;
+
+  /* =============布局高度规范============= */
+  /* 顶部导航 Header 高度 48px */
+  --layout-header-height: 48px;
+  /* 列表页搜索区域高度 48px */
+  --layout-search-height: 48px;
+  /* 页签栏高度 36px */
+  --layout-tabs-height: 36px;
+  /* 列表工具栏高度 40px */
+  --layout-toolbar-height: 40px;
+
+  /* =============弹窗宽度规范============= */
+  /* 小弹窗：最小宽度 480px */
+  --modal-width-sm: 480px;
+  /* 标准弹窗：最大宽度 600px */
+  --modal-width-md: 600px;
+  /* 大弹窗：720px */
+  --modal-width-lg: 720px;
+  /* 超大弹窗：屏幕宽度 88% */
+  --modal-width-xl: 88vw;
+
+  /* =============描边色规范============= */
+  /* 弹窗/表格专用描边 #E2E2E2（区别于通用边框 #E5E6EB） */
+  --border-modal: #e2e2e2;
+  /* 分割线 #E7E7E7 */
+  --border-divider: #e7e7e7;
+
   /* Line-1 浅 #F2F3F5 */
   --line-1: 220 11% 96%;
   /* Line-2 一般 #E5E6EB */
