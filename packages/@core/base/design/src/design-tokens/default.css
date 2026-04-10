@@ -9,91 +9,130 @@
   /* Default background color of <body />...etc */
   --background: 0 0% 100%;
 
-  /* 主体区域背景色 */
-  --background-deep: 216 20.11% 95.47%;
-  --foreground: 210 6% 21%;
+  /* 主体区域背景色：Fill-2 #F7F8FA */
+  --background-deep: 210 33% 98%;
+  --foreground: 0 0% 0% / 90%;
 
   /* Background color for <Card /> */
   --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  --card-foreground: 0 0% 0% / 90%;
 
   /* Background color for popovers such as <DropdownMenu />, <HoverCard />, <Popover /> */
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
+  --popover-foreground: 0 0% 0% / 90%;
 
   /* Muted backgrounds such as <TabsList />, <Skeleton /> and <Switch /> */
+  /* Fill-3 #F2F3F5 */
+  --muted: 220 11% 96%;
+  --muted-foreground: 220 9% 46%;
 
-  /* --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%; */
+  /* 主题颜色：Brand1-6 #0F56D5 → HSL(218 88% 44%) */
+  --primary: 218 88% 44%;
+  --primary-foreground: 0 0% 100%;
 
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
+  /* 错误色：Error-6 #F53F3F → HSL(0 90% 60%) */
+  --destructive: 0 90% 60%;
+  --destructive-foreground: 0 0% 100%;
 
-  /* 主题颜色 */
+  /* 信息色 */
+  --info: 220 11% 96%;
+  --info-foreground: 220 9% 46%;
 
-  --primary: 212 100% 45%;
-  --primary-foreground: 0 0% 98%;
+  /* 成功色：Success-6 #00B42A → HSL(133 100% 35%) */
+  --success: 133 100% 35%;
+  --success-foreground: 0 0% 100%;
 
-  /* Used for destructive actions such as <Button variant="destructive"> */
+  /* 警告色：Warning-6 #FF7D00 → HSL(30 100% 50%) */
+  --warning: 30 100% 50%;
+  --warning-foreground: 0 0% 100%;
 
-  --destructive: 359.33 100% 65.1%;
-  --destructive-foreground: 0 0% 98%;
+  /* Secondary colors */
+  /* Fill-3 #F2F3F5 */
+  --secondary: 220 11% 96%;
+  --secondary-foreground: 0 0% 0% / 60%;
 
-  /* Used for success actions such as <message> */
-
-  --info: 240, 5%, 96%;
-  --info-foreground: 220, 4%, 58%;
-
-  /* Used for success actions such as <message> */
-
-  --success: 144 57% 58%;
-  --success-foreground: 0 0% 98%;
-
-  /* Used for warning actions such as <message> */
-
-  --warning: 42 84% 61%;
-  --warning-foreground: 0 0% 98%;
-
-  /* Secondary colors for <Button /> */
-
-  --secondary: 240 5% 96%;
-  --secondary-foreground: 240 6% 10%;
-
-  /* Used for accents such as hover effects on <DropdownMenuItem>, <SelectItem>...etc */
-  --accent: 240 5% 96%;
-  --accent-dark: 216 14% 93%;
-  --accent-darker: 216 11% 91%;
-  --accent-lighter: 240 0% 98%;
-  --accent-hover: 200deg 10% 90%;
-  --accent-foreground: 240 6% 10%;
+  /* Accent：Fill-3 #F2F3F5，Fill-4 #E5E6EB，Fill-5 #C9CDD4 */
+  --accent: 220 11% 96%;
+  --accent-dark: 220 10% 91%;
+  --accent-darker: 220 8% 85%;
+  --accent-lighter: 0 0% 98%;
+  --accent-hover: 220 11% 93%;
+  --accent-foreground: 0 0% 0% / 60%;
 
   /* Darker color */
-  --heavy: 192deg 9.43% 89.61%;
+  --heavy: 220 10% 91%;
   --heavy-foreground: var(--accent-foreground);
 
-  /* Default border color */
-  --border: 240 5.9% 90%;
+  /* 线条色 Line-2 #E5E6EB */
+  --border: 220 8% 91%;
 
-  /* Border color for inputs such as <Input />, <Select />, <Textarea /> */
-  --input: 240deg 5.88% 90%;
-  --input-placeholder: 217 10.6% 65%;
+  /* 输入框边框：Line-2 #E5E6EB */
+  --input: 220 8% 91%;
+  --input-placeholder: 220 9% 65%;
   --input-background: 0 0% 100%;
 
-  /* Used for focus ring */
-  --ring: 222.2 84% 4.9%;
+  /* Focus ring */
+  --ring: 218 88% 44%;
 
-  /* Border radius for card, input and buttons */
-  --radius: 0.5rem;
+  /* 圆角：整体模块/组件 6px = 0.375rem */
+  --radius: 0.375rem;
 
   /* ============= custom ============= */
 
-  /* 遮罩颜色 */
-  --overlay: 0 0% 0% / 45%;
+  /* 遮罩：#000 透明度60% */
+  --overlay: 0 0% 0% / 60%;
   --overlay-content: 0 0% 95% / 45%;
 
-  /* 基本文字大小 */
-  --font-size-base: 16px;
+  /* 视觉规范基础字号 14px */
+  --font-size-base: 14px;
   --menu-font-size: calc(var(--font-size-base) * 0.875);
+
+  /* =============品牌色完整序列 Brand Color============= */
+  /* Brand1-1 浅色/白底悬浮 #E8F3FF */
+  --brand-1: 210 100% 95%;
+  /* Brand1-2 文字禁用 #BEDAFF */
+  --brand-2: 213 100% 87%;
+  /* Brand1-3 一般禁用 #94BFFF */
+  --brand-3: 215 100% 79%;
+  /* Brand1-4 特殊场景 #6AA1FF */
+  --brand-4: 219 100% 71%;
+  /* Brand1-5 悬浮 #4080FF */
+  --brand-5: 221 100% 63%;
+  /* Brand1-6 常规 #0F56D5 */
+  --brand-6: 218 88% 44%;
+  /* Brand1-7 点击 #0E42D2 */
+  --brand-7: 227 89% 44%;
+
+  /* =============中性色============= */
+  /* Fill-1 白色 #FFFFFF */
+  --fill-1: 0 0% 100%;
+  /* Fill-2 浅/禁用 #F7F8FA */
+  --fill-2: 210 33% 98%;
+  /* Fill-3 一般/常规/白底悬浮 #F2F3F5 */
+  --fill-3: 220 11% 96%;
+  /* Fill-4 深/灰底悬浮 #E5E6EB */
+  --fill-4: 220 8% 91%;
+  /* Fill-5 重/特殊场景 #C9CDD4 */
+  --fill-5: 216 9% 81%;
+  /* Fill-6 强调/图标/特殊场景 #4E5969 */
+  --fill-6: 213 15% 36%;
+
+  /* Line-1 浅 #F2F3F5 */
+  --line-1: 220 11% 96%;
+  /* Line-2 一般 #E5E6EB */
+  --line-2: 220 8% 91%;
+  /* Line-3 深/悬浮 #C9CDD4 */
+  --line-3: 216 9% 81%;
+  /* Line-4 重/按钮描边 #86909C */
+  --line-4: 211 8% 57%;
+
+  /* =============投影 Shadow============= */
+  /* 基础投影：hover 状态 */
+  --shadow-base: 0 1px 10px rgba(0, 0, 0, 5%), 0 4px 5px rgba(0, 0, 0, 8%), 0 2px 4px -1px rgba(0, 0, 0, 12%);
+  /* 中层投影：下拉/气泡 */
+  --shadow-medium: 0 3px 14px 2px rgba(0, 0, 0, 5%), 0 8px 10px 1px rgba(0, 0, 0, 6%), 0 5px 5px -3px rgba(0, 0, 0, 10%);
+  /* 上层投影：弹窗/通知 */
+  --shadow-top: 0 6px 30px 5px rgba(0, 0, 0, 5%), 0 16px 24px 2px rgba(0, 0, 0, 4%), 0 8px 10px -5px rgba(0, 0, 0, 8%);
 
   /* =============component & UI============= */
 
@@ -105,7 +144,7 @@
   /* header */
   --header: 0 0% 100%;
 
-  accent-color: var(--primary);
+  accent-color: hsl(var(--primary));
   color-scheme: light;
 }
 

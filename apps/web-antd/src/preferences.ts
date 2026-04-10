@@ -18,7 +18,26 @@ export const overridesPreferences = defineOverridesPreferences({
     enableRefreshToken: true,
   },
   theme: {
+    /** 默认白天模式 */
     mode: 'light',
+    /**
+     * 视觉规范 v1.0：主色 Brand1-6 #0F56D5
+     * 悬浮 #4080FF，点击 #0E42D2
+     */
+    colorPrimary: 'hsl(218 88% 44%)',
+    /** 视觉规范 v1.0：成功色 Success-6 #00B42A */
+    colorSuccess: 'hsl(133 100% 35%)',
+    /** 视觉规范 v1.0：警告色 Warning-6 #FF7D00 */
+    colorWarning: 'hsl(30 100% 50%)',
+    /** 视觉规范 v1.0：错误色 Error-6 #F53F3F */
+    colorDestructive: 'hsl(0 90% 60%)',
+    /**
+     * 视觉规范 v1.0：圆角
+     * 整体模块/组件 6px → 0.375rem；弹窗/表格 2px 由 antd token 单独设置
+     */
+    radius: 0.375,
+    /** 视觉规范 v1.0：基础字号 14px */
+    fontSize: 14,
   },
   footer: {
     /** 默认关闭 footer 页脚，因为有一定遮挡 */

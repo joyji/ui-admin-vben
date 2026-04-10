@@ -1,18 +1,27 @@
 /* ant-design-vue 组件库的一些样式重置 */
+/* 视觉规范 v1.0 - 新小微租赁系统 */
 
 .ant-app {
   width: 100%;
   height: 100%;
   overscroll-behavior: none;
   color: inherit;
+  /* 视觉规范：基础字号 14px */
+  font-size: 14px;
 }
 
+/* ============= 按钮 Button ============= */
+/* 视觉规范：强按钮/描边按钮高度 32px，内边距 8px 16px */
 .ant-btn {
+  height: 32px;
+  padding: 0 16px;
+  font-size: 14px;
+  border-radius: 6px;
+
   .anticon {
     display: inline-flex;
   }
 
-  /* * 修复按钮添加图标时的位置问题 */
   > svg {
     display: inline-block;
   }
@@ -22,7 +31,196 @@
   }
 }
 
+/* 弱按钮（次级按钮）使用描边样式，高度与主按钮相同 */
+.ant-btn-default {
+  border-color: hsl(var(--line-4, 211 8% 57%));
+}
+
+/* ============= 输入框 Input / Select ============= */
+/* 视觉规范：输入框/选择框 32px */
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-number,
+.ant-input-number-affix-wrapper,
+.ant-picker,
+.ant-select:not(.ant-select-multiple) .ant-select-selector {
+  height: 32px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+/* 多选 tag 选择器行高自适应，但最小 32px */
+.ant-select-multiple .ant-select-selector {
+  min-height: 32px;
+  border-radius: 6px;
+}
+
+/* ============= 表格 Table ============= */
+/* 视觉规范：普通表格行高 40px，表头行 40px */
+.ant-table {
+  font-size: 14px;
+
+  .ant-table-thead > tr > th {
+    height: 40px;
+    padding: 0 16px;
+    background-color: hsl(var(--fill-3, 220 11% 96%));
+    font-weight: 600;
+    border-radius: 0 !important;
+    /* 分割线：1px #E7E7E7 */
+    border-bottom: 1px solid #e7e7e7;
+  }
+
+  .ant-table-tbody > tr > td {
+    height: 40px;
+    padding: 0 16px;
+    border-bottom: 1px solid #e7e7e7;
+  }
+
+  /* 表格内嵌/子表格行高 40px */
+  .ant-table-summary > tr > td {
+    padding: 0 16px;
+    background-color: hsl(var(--fill-2, 210 33% 98%));
+  }
+
+  /* 斑马条或hover状态 */
+  .ant-table-tbody > tr.ant-table-row:hover > td {
+    background-color: hsl(var(--brand-1, 210 100% 95%));
+  }
+}
+
+/* VXE 表格同步行高 */
+.vxe-table {
+  font-size: 14px;
+
+  .vxe-header--row {
+    height: 40px;
+  }
+
+  .vxe-body--row {
+    height: 40px;
+  }
+}
+
+/* ============= 弹窗 Modal ============= */
+/* 视觉规范：最小宽度 480px，最大宽度 600px，大弹窗 720px，超大 88% */
+.ant-modal {
+  .ant-modal-content {
+    border-radius: 6px;
+    /* 上层投影 */
+    box-shadow: 0 6px 30px 5px rgba(0, 0, 0, 5%), 0 16px 24px 2px rgba(0, 0, 0, 4%), 0 8px 10px -5px rgba(0, 0, 0, 8%);
+  }
+
+  .ant-modal-header {
+    border-radius: 6px 6px 0 0;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e7e7e7;
+  }
+
+  .ant-modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 90%);
+  }
+
+  .ant-modal-body {
+    padding: 24px;
+  }
+
+  .ant-modal-footer {
+    padding: 12px 24px;
+    border-top: 1px solid #e7e7e7;
+    border-radius: 0 0 6px 6px;
+
+    .ant-btn + .ant-btn {
+      margin-inline-start: 8px;
+    }
+  }
+}
+
+/* 遮罩层：#000 透明度60% */
+.ant-modal-mask {
+  background-color: rgba(0, 0, 0, 60%);
+}
+
+/* ============= 表单 Form ============= */
+/* 视觉规范：表单行间距 24px，label 间距 8px */
+.ant-form-item {
+  margin-bottom: 24px;
+
+  .ant-form-item-label {
+    padding-bottom: 8px;
+
+    > label {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 60%);
+      height: auto;
+    }
+  }
+}
+
+/* ============= 下拉 Dropdown / Select dropdown ============= */
+.ant-select-dropdown,
+.ant-dropdown-menu,
+.ant-picker-dropdown {
+  /* 中层投影：下拉组件 */
+  box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 5%), 0 8px 10px 1px rgba(0, 0, 0, 6%), 0 5px 5px -3px rgba(0, 0, 0, 10%);
+  border-radius: 6px;
+
+  .ant-select-item {
+    font-size: 14px;
+    min-height: 32px;
+    line-height: 32px;
+    padding: 0 12px;
+  }
+}
+
+/* ============= 卡片 Card ============= */
+.ant-card {
+  border-radius: 6px;
+  /* 基础投影：hover 状态 */
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 5%), 0 4px 5px rgba(0, 0, 0, 8%), 0 2px 4px -1px rgba(0, 0, 0, 12%);
+  border: 1px solid #e5e6eb;
+
+  .ant-card-head {
+    min-height: 48px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e6eb;
+  }
+
+  .ant-card-body {
+    padding: 16px;
+  }
+}
+
+/* ============= 分页 Pagination ============= */
+.ant-pagination {
+  font-size: 14px;
+
+  .ant-pagination-item {
+    height: 32px;
+    min-width: 32px;
+    line-height: 32px;
+    border-radius: 6px;
+  }
+
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    height: 32px;
+    min-width: 32px;
+    line-height: 32px;
+    border-radius: 6px;
+  }
+}
+
+/* ============= Tag 状态标签 ============= */
 .ant-tag {
+  border-radius: 2px;
+  font-size: 12px;
+  line-height: 20px;
+  padding: 0 6px;
+
   > svg {
     display: inline-block;
   }
@@ -32,9 +230,92 @@
   }
 }
 
+/* ============= 全局消息提示 ============= */
 .ant-message-notice-content,
 .ant-notification-notice {
+  border-radius: 6px;
+  /* 上层投影：警示或弹窗组件 */
+  box-shadow: 0 6px 30px 5px rgba(0, 0, 0, 5%), 0 16px 24px 2px rgba(0, 0, 0, 4%), 0 8px 10px -5px rgba(0, 0, 0, 8%);
+
   @apply dark:border-border/60 dark:border;
+}
+
+/* ============= 面包屑 Breadcrumb ============= */
+.ant-breadcrumb {
+  font-size: 14px;
+}
+
+/* ============= 分割线 Divider ============= */
+/* 视觉规范：1px #E7E7E7 */
+.ant-divider {
+  border-color: #e7e7e7;
+}
+
+/* ============= Tabs 页签 ============= */
+.ant-tabs {
+  font-size: 14px;
+
+  .ant-tabs-tab {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: hsl(218 88% 44%);
+  }
+
+  .ant-tabs-ink-bar {
+    background-color: hsl(218 88% 44%);
+  }
+}
+
+/* ============= Collapse 折叠组件 ============= */
+.ant-collapse {
+  border-radius: 6px;
+  border: 1px solid #e5e6eb;
+
+  .ant-collapse-header {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 16px;
+  }
+
+  .ant-collapse-content-box {
+    padding: 16px;
+  }
+}
+
+/* ============= 表单校验错误态 ============= */
+.form-valid-error {
+  .ant-select:not(.valid-success) .ant-select-selector:not(.valid-success) {
+    border-color: hsl(var(--destructive)) !important;
+  }
+
+  .ant-select-focused .ant-select-selector {
+    box-shadow: 0 0 0 2px rgb(245 63 63 / 10%) !important;
+  }
+
+  .ant-input-number-focused {
+    box-shadow: 0 0 0 2px rgb(245 63 63 / 10%);
+  }
+
+  .ant-input-affix-wrapper:hover {
+    border-color: hsl(var(--destructive));
+    box-shadow: 0 0 0 2px rgb(245 63 63 / 10%);
+  }
+
+  .ant-input:not(.valid-success) {
+    border-color: hsl(var(--destructive)) !important;
+  }
+}
+
+/* 区间选择器下面来回切换时的样式 */
+.ant-app .form-valid-error .ant-picker-active-bar {
+  background-color: hsl(var(--destructive));
+}
+
+.ant-app .form-valid-error .ant-picker-focused {
+  box-shadow: 0 0 0 2px rgb(245 63 63 / 10%);
 }
 
 .form-valid-error {
