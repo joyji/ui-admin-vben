@@ -333,13 +333,174 @@ const [Modal, modalApi] = useVbenModal({
 
 ---
 
-## 八、Cursor Rule 配置（`.cursor/rules/form-skill.mdc`）
+## 八、BizFormPage 标准组件（0 CSS 生成页面）
+
+这是最关键的规范：**业务页面无需写任何 CSS**，只需使用以下 4 个全局注册组件。
+
+### 4 个组件
+
+| 组件 | 职责 |
+|---|---|
+| `<BizFormPage>` | 页面容器：页头标题 + 右上角按钮栏 + 内容区 + 底部 sticky 操作栏 |
+| `<BizFormGroup>` | 折叠分组：左侧主色边框、标题、展开/收起 |
+| `<BizFormFooter>` | 底部 sticky 操作栏（单独使用时） |
+| `<BizActionBar>` | 页头右侧按钮组（单独使用时） |
+
+### BizFormPage Props
+
+| Prop | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `title` | string | '' | 页面标题 |
+| `loading` | boolean | false | 提交按钮 loading |
+| `showBack` | boolean | false | 是否显示页头"返回"弱按钮 |
+| `showReset` | boolean | false | 是否显示页头"重置"弱按钮 |
+| `showHeaderSave` | boolean | false | 是否在页头显示"保存"按钮 |
+| `showHeaderSubmit` | boolean | false | 是否在页头显示"提交"按钮 |
+| `showFooter` | boolean | true | 是否显示底部操作栏 |
+| `showFooterCancel` | boolean | true | 底部"取消"按钮 |
+| `showFooterSave` | boolean | true | 底部"保存"按钮 |
+| `showFooterSubmit` | boolean | true | 底部"提交"按钮 |
+| `submitText` | string | '提交' | 提交按钮文案 |
+| `saveText` | string | '保存' | 保存按钮文案 |
+
+### BizFormPage Slots
+
+| 插槽名 | 说明 |
+|---|---|
+| `header-prepend` | 页头左侧附加按钮（流程图等） |
+| `header-extra` | 页头中央附加按钮（征求意见等） |
+| `header-append` | 页头右侧危险操作（否决/作废） |
+| `default` | 主内容（放 `<BizFormGroup>` 或直接放 `<Form>`） |
+| `footer-start` | 底部左侧弱操作（退回修改等） |
+| `footer` | 完全自定义底部按钮 |
+| `footer-end` | 底部右侧附加按钮 |
+
+### BizFormPage Events
+
+| 事件 | 说明 |
+|---|---|
+| `@back` | 返回/取消 |
+| `@reset` | 重置 |
+| `@save` | 保存 |
+| `@submit` | 提交 |
+
+### 0 CSS 最小用法
+
+```vue
+<template>
+  <BizFormPage
+    title="项目授信流程"
+    :loading="loading"
+    :show-back="true"
+    @back="handleBack"
+    @save="handleSave"
+    @submit="handleSubmit"
+  >
+    <BizFormGroup title="基本信息">
+      <Form />
+    </BizFormGroup>
+  </BizFormPage>
+</template>
+```
+
+### 完整用法（对应截图）
+
+```vue
+<template>
+  <BizFormPage
+    title="项目授信流程-江苏医疗器械有限公司"
+    :loading="loading"
+    :show-back="true"
+    submit-text="提交"
+    @back="handleBack"
+    @save="handleSave"
+    @submit="handleSubmit"
+  >
+    <!-- 页头：流程图 / 征求意见 / 转他人处理 -->
+    <template #header-extra>
+      <a-button>流程图</a-button>
+      <a-button>征求他人意见</a-button>
+      <a-button>转他人处理</a-button>
+    </template>
+    <!-- 页头危险操作 -->
+    <template #header-append>
+      <a-button danger>否决</a-button>
+    </template>
+
+    <!-- 多个折叠分组 -->
+    <BizFormGroup title="基本信息">
+      <BaseForm />
+    </BizFormGroup>
+    <BizFormGroup title="风险敞口信息" :default-open="false">
+      <RiskForm />
+    </BizFormGroup>
+
+    <!-- 底部左侧弱操作 -->
+    <template #footer-start>
+      <a-button class="ant-btn-back">退回修改</a-button>
+    </template>
+  </BizFormPage>
+</template>
+```
+
+### BizFormGroup Props
+
+| Prop | 类型 | 默认 | 说明 |
+|---|---|---|---|
+| `title` | string | '' | 分组标题 |
+| `defaultOpen` | boolean | true | 默认是否展开 |
+| `extra` | boolean | false | 是否启用右上角插槽 |
+
+---
+
+## 九、AI 生成 Prompt（加入 Biz 组件后）
+
+### index.vue 生成 Prompt（新版：0 CSS）
+
+```
+你是熟悉 Vben Admin 5.x 的前端工程师。
+页面使用全局注册的 BizFormPage + BizFormGroup，无需写任何 CSS。
+
+【模板】
+<BizFormPage
+  title="<页面标题>"
+  :loading="loading"
+  :show-back="true"
+  submit-text="提交"
+  @back="handleBack"
+  @save="handleSave"
+  @submit="handleSubmit"
+>
+  <!-- 页头附加按钮（可选） -->
+  <template #header-extra>
+    <a-button>流程图</a-button>
+  </template>
+
+  <!-- 一个或多个分组 -->
+  <BizFormGroup title="基本信息">
+    <Form />
+  </BizFormGroup>
+
+  <!-- 底部左侧弱操作（可选） -->
+  <template #footer-start>
+    <a-button class="ant-btn-back">退回</a-button>
+  </template>
+</BizFormPage>
+
+【禁止】
+- 不写任何 <style> 块
+- 不写 padding、sticky、border 等布局样式
+- 不手动写 <a-collapse>（用 BizFormGroup 替代）
+- 不手动写底部 sticky div（BizFormPage 已内置）
+```
+
+## 十、Cursor Rule 配置（`.cursor/rules/form-skill.mdc`）
 
 将以下内容保存为 `.cursor/rules/form-skill.mdc`，让 Cursor AI 在生成表单代码时自动遵守规范：
 
 ```markdown
 ---
-description: 表单代码生成规范（Vben Admin 5.x + antd）
+description: 表单代码生成规范（Vben Admin 5.x + antd + Biz 组件）
 globs:
   - src/views/**/data.ts
   - src/views/**/form.vue
@@ -347,14 +508,25 @@ globs:
 ---
 
 生成表单代码时，严格遵守以下规范：
-1. Schema 文件命名：use<PageName>FormSchema()，导出自 data.ts
-2. 字段 component 只使用 adapter/component 已注册的类型
-3. 必填输入框用 rules: 'required'，必填选择框用 rules: 'selectRequired'
-4. 3 列布局：formItemClass 'col-span-4'，全宽 'col-span-12'
-5. 弹窗默认 2 列：formItemClass 'col-span-2'，labelWidth: 80
-6. 联动用 dependencies: { triggerFields, show/rules }
-7. 枚举常量放在 data.ts 顶部并 export
-8. 所有 API 调用写占位注释，不直接引入
-9. 类型定义 interface 放在 data.ts 末尾
-10. 页面组件 defineOptions({ name: 'XxxForm' })
+
+【页面容器】
+- 使用全局注册的 BizFormPage + BizFormGroup，不写任何 <style> 块
+- 禁止手动写 padding/sticky/border 等布局类名
+- <BizFormPage> 处理页头、内容区、底部 sticky 操作栏
+- <BizFormGroup> 处理折叠分组（替代裸 <a-collapse>）
+
+【Schema 规范】
+- use<PageName>FormSchema()，导出自 data.ts
+- 字段 component 只使用 adapter/component 已注册的类型
+- 必填输入框：rules: 'required'，必填选择框：rules: 'selectRequired'
+- 3 列布局：formItemClass 'col-span-4'，全宽 'col-span-12'
+- 弹窗默认 2 列：formItemClass 'col-span-2'，labelWidth: 80
+- 联动：dependencies: { triggerFields, show/rules }
+- 枚举常量放 data.ts 顶部并 export
+- API 调用写占位注释
+- 类型 interface 放 data.ts 末尾
+
+【通用】
+- defineOptions({ name: 'XxxForm' })
+- 所有处理函数命名 handle<Action>（如 handleSubmit、handleBack）
 ```
