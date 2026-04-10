@@ -83,6 +83,15 @@ const routes: RouteRecordRaw[] = [
           title: '联动压测页',
         },
       },
+      {
+        path: '/infra/demo/form-example',
+        name: 'OfflineFormExample',
+        component: () => import('#/views/infra/demo/form-example/index.vue'),
+        meta: {
+          title: '表单设计示例',
+          icon: 'ant-design:form-outlined',
+        },
+      },
     ],
   },
   {
