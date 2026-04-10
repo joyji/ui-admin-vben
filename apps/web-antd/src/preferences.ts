@@ -32,12 +32,12 @@ export const overridesPreferences = defineOverridesPreferences({
     /** 视觉规范 v1.0：错误色 Error-6 #F53F3F */
     colorDestructive: 'hsl(0 90% 60%)',
     /**
-     * 视觉规范 v1.0：圆角
-     * 整体模块/组件 6px → 0.375rem；弹窗/表格 2px 由 antd token 单独设置
+     * pc-biz 圆角：通用 2px → 0.125rem
+     * 弹窗 6px/按钮 3px 由 CSS 单独设置
      */
-    radius: 0.375,
-    /** 视觉规范 v1.0：基础字号 14px */
-    fontSize: 14,
+    radius: 0.125,
+    /** pc-biz 基础字号 13px */
+    fontSize: 13,
   },
   footer: {
     /** 默认关闭 footer 页脚，因为有一定遮挡 */

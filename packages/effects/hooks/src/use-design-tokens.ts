@@ -26,10 +26,12 @@ export function useAntdDesignTokens() {
     colorTextBase: '',
     colorWarning: '',
     zIndexPopupBase: 2000, // 调整基础弹层层级，避免下拉等组件被弹窗或者最大化状态下的表格遮挡
-    // 视觉规范 v1.0：输入框/按钮高度 32px，由 antd 统一推算 padding/line-height
-    controlHeight: 32,
-    // 基础字号 14px
-    fontSize: 14,
+    // pc-biz medium 模式：输入框/按钮高度 28px，由 antd token 统一控制
+    controlHeight: 28,
+    // pc-biz 基础字号 13px
+    fontSize: 13,
+    // 圆角：整体模块 2px（pc-biz 按钮 border-radius: 3px，通用 2px）
+    borderRadius: 2,
   });
 
   const getCssVariableValue = (variable: string, isColor: boolean = true) => {
