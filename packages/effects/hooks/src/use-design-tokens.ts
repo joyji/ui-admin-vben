@@ -26,6 +26,10 @@ export function useAntdDesignTokens() {
     colorTextBase: '',
     colorWarning: '',
     zIndexPopupBase: 2000, // 调整基础弹层层级，避免下拉等组件被弹窗或者最大化状态下的表格遮挡
+    // 视觉规范 v1.0：输入框/按钮高度 32px，由 antd 统一推算 padding/line-height
+    controlHeight: 32,
+    // 基础字号 14px
+    fontSize: 14,
   });
 
   const getCssVariableValue = (variable: string, isColor: boolean = true) => {

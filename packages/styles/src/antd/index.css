@@ -16,13 +16,11 @@
 /* ============= 按钮 Button ============= */
 /*
  * 视觉规范 p12：
- * 填充按钮（强按钮）/ 描边按钮 高度 32px，内边距 16px
- * 文字按钮：无边框无背景，与内容同高
- * 页内次级按钮（详情页内区域按钮）高度 32px，采用描边样式
+ * 填充按钮（强按钮）/ 描边按钮 高度 32px 由 antd token controlHeight=32 统一控制。
+ * CSS 层只负责内边距、字号、圆角、颜色等，不强制覆盖 height。
  */
 .ant-btn {
-  height: 32px;
-  padding: 0 16px;
+  padding-inline: 16px;
   font-size: 14px;
   border-radius: 6px;
   font-weight: 400;
@@ -74,61 +72,103 @@
 }
 
 /* ============= 输入框 Input / Select ============= */
-/* 视觉规范 p12：输入框/选择框高度 32px，圆角 6px，描边 Line-2 #E5E6EB */
+/*
+ * 视觉规范 p12：高度 32px 由 antd token controlHeight=32 统一控制，
+ * CSS 层只负责 border 颜色、圆角、各交互状态，不强制覆盖 height/padding/line-height。
+ */
+
+/* 默认描边 Line-2 #E5E6EB */
 .ant-input,
 .ant-input-affix-wrapper,
 .ant-input-number,
 .ant-input-number-affix-wrapper,
-.ant-picker,
-.ant-select:not(.ant-select-multiple) .ant-select-selector {
-  height: 32px;
-  font-size: 14px;
-  border-radius: 6px;
+.ant-picker {
   border-color: #e5e6eb;
+  font-size: 14px;
+}
+
+.ant-select:not(.ant-select-multiple) .ant-select-selector,
+.ant-select-multiple .ant-select-selector {
+  border-color: #e5e6eb !important;
+  font-size: 14px;
 }
 
 /* 悬浮描边 Line-3 #C9CDD4 */
 .ant-input:hover,
 .ant-input-affix-wrapper:hover,
-.ant-select:hover .ant-select-selector,
 .ant-picker:hover {
   border-color: #c9cdd4 !important;
 }
 
-/* 焦点描边 Brand1-6 #0F56D5 */
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: #c9cdd4 !important;
+}
+
+/* 焦点描边 Brand1-6 #0F56D5，焦点光晕 10% */
 .ant-input:focus,
-.ant-input-affix-wrapper-focused,
-.ant-select-focused .ant-select-selector,
+.ant-input-affix-wrapper-focused {
+  border-color: #0f56d5 !important;
+  box-shadow: 0 0 0 2px rgb(15 86 213 / 10%) !important;
+}
+
+.ant-select-focused:not(.ant-select-disabled) .ant-select-selector {
+  border-color: #0f56d5 !important;
+  box-shadow: 0 0 0 2px rgb(15 86 213 / 10%) !important;
+}
+
 .ant-picker-focused {
   border-color: #0f56d5 !important;
   box-shadow: 0 0 0 2px rgb(15 86 213 / 10%) !important;
 }
 
-/* 禁用态 Fill-2 #F7F8FA */
+.ant-input-number-focused,
+.ant-input-number-affix-wrapper-focused {
+  border-color: #0f56d5 !important;
+  box-shadow: 0 0 0 2px rgb(15 86 213 / 10%) !important;
+}
+
+/* 禁用态 Fill-2 #F7F8FA，文字 Text-3 */
 .ant-input:disabled,
-.ant-input-affix-wrapper-disabled,
-.ant-select-disabled .ant-select-selector,
-.ant-picker.ant-picker-disabled {
+.ant-input[disabled] {
   background-color: #f7f8fa !important;
   border-color: #e5e6eb !important;
   color: rgb(0 0 0 / 40%);
 }
 
-/* 多选 tag 选择器行高自适应，但最小 32px */
-.ant-select-multiple .ant-select-selector {
-  min-height: 32px;
-  border-radius: 6px;
-  border-color: #e5e6eb;
+.ant-input-affix-wrapper-disabled {
+  background-color: #f7f8fa !important;
+  border-color: #e5e6eb !important;
+
+  .ant-input {
+    background-color: transparent !important;
+    color: rgb(0 0 0 / 40%);
+  }
 }
 
-/* Textarea 最小高度 & 圆角 */
+.ant-select-disabled .ant-select-selector {
+  background-color: #f7f8fa !important;
+  border-color: #e5e6eb !important;
+  color: rgb(0 0 0 / 40%) !important;
+}
+
+.ant-picker.ant-picker-disabled {
+  background-color: #f7f8fa !important;
+  border-color: #e5e6eb !important;
+}
+
+.ant-input-number-disabled,
+.ant-input-number-affix-wrapper-disabled {
+  background-color: #f7f8fa !important;
+  border-color: #e5e6eb !important;
+}
+
+/* Textarea */
 .ant-input-textarea textarea {
-  border-radius: 6px;
   border-color: #e5e6eb;
   font-size: 14px;
 }
 
-/* 输入框后缀字数统计 Text-3 */
+/* 字数统计 Text-3 */
 .ant-input-data-count {
   color: rgb(0 0 0 / 40%);
   font-size: 12px;
@@ -414,14 +454,11 @@
 }
 
 /* ============= 分页 Pagination ============= */
-/* 视觉规范：分页高度 32px，圆角 6px */
+/* 视觉规范：分页圆角 6px，激活色 Brand1-6（高度由 token controlHeight 统一） */
 .ant-pagination {
   font-size: 14px;
 
   .ant-pagination-item {
-    height: 32px;
-    min-width: 32px;
-    line-height: 30px;
     border-radius: 6px;
     border-color: #e5e6eb;
     font-size: 14px;
@@ -438,14 +475,6 @@
 
   .ant-pagination-prev,
   .ant-pagination-next {
-    height: 32px;
-    min-width: 32px;
-    line-height: 30px;
-    border-radius: 6px;
-  }
-
-  .ant-pagination-options .ant-select .ant-select-selector {
-    height: 32px;
     border-radius: 6px;
   }
 }
