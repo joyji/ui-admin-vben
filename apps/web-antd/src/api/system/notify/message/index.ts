@@ -1,5 +1,6 @@
 import type { PageParam, PageResult } from '@vben/request';
 
+import { mockGetUnreadCountResponse } from '#/api/mock/login-flow-mock';
 import { requestClient } from '#/api/request';
 
 export namespace SystemNotifyMessageApi {
@@ -60,6 +61,6 @@ export function getUnreadNotifyMessageList() {
 }
 
 /** 获得当前用户的未读站内信数量 */
-export function getUnreadNotifyMessageCount() {
-  return requestClient.get<number>('/system/notify-message/get-unread-count');
+export async function getUnreadNotifyMessageCount() {
+  return mockGetUnreadCountResponse.data as number;
 }

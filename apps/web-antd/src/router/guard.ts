@@ -8,9 +8,11 @@ import { startProgress, stopProgress } from '@vben/utils';
 
 import { message } from 'ant-design-vue';
 
+import { getOneIdAccessToken } from '#/api';
 import { getSimpleDictDataList } from '#/api/system/dict/data';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore } from '#/store';
+import { getUrlValue, goOneIDLogin, isRedirectOneid } from '#/utils/oneID';
 
 import { generateAccess } from './access';
 
@@ -74,20 +76,53 @@ function setupAccessGuard(router: Router) {
         return true;
       }
 
-      // 没有访问权限，跳转登录页面
-      if (to.fullPath !== LOGIN_PATH) {
-        return {
-          path: LOGIN_PATH,
-          // 如不需要，直接删除 query
-          query:
-            to.fullPath === preferences.app.defaultHomePath
-              ? {}
-              : { redirect: encodeURIComponent(to.fullPath) },
-          // 携带当前跳转的页面，登录后重新跳转该页面
-          replace: true,
-        };
+      // 没有访问权限 - 判断当前环境是否启用 OneID
+      const oneIDEnabled = import.meta.env.VITE_ONEID_ENABLED === 'true';
+      console.log('当前环境 OneID 状态:', import.meta.env.VITE_ONEID_ENABLED);
+
+      if (!oneIDEnabled) {
+        // dev/local 环境：直接跳转登录页
+        if (to.fullPath !== LOGIN_PATH) {
+          return {
+            path: LOGIN_PATH,
+            query:
+              to.fullPath === preferences.app.defaultHomePath
+                ? {}
+                : { redirect: encodeURIComponent(to.fullPath) },
+            replace: true,
+          };
+        }
+        return to;
       }
-      return to;
+
+      // 生产/stg 环境：OneID 登录流程
+      const clientId = import.meta.env.VITE_ONEID_CLIENT_ID;
+      if (isRedirectOneid()) {
+        // OneID 回调：从 URL 中获取 code，并用 code 获取 accessToken
+        const code = getUrlValue('code');
+        const redirectUri = location.origin;
+        try {
+          const data = await getOneIdAccessToken(clientId, code, redirectUri);
+          console.log('获取到的 OneID 数据：', data);
+          // 将 token 写入 accessStore
+          accessStore.setAccessToken(data.accessToken);
+          accessStore.setRefreshToken(data.refreshToken);
+          // 移除 URL 中的 code/state 参数，跳回首页
+          window.location.href = redirectUri;
+        } catch (e) {
+          console.error('OneID 登录失败：', e);
+          window.location.href = redirectUri;
+        }
+        return false;
+      } else {
+        // 未登录：跳转到 OneID 登录页
+        goOneIDLogin({
+          oneIDUrl: import.meta.env.VITE_ONEID_URL,
+          clinetId: clientId,
+          redirectUrl: location.origin,
+        });
+        return false;
+      }
     }
 
     // 是否已经生成过动态路由

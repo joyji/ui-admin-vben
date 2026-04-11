@@ -155,9 +155,9 @@ defineExpose({
       {{ submitButtonText || $t('common.login') }}
     </VbenButton>
 
-    <div
+    <!-- <div
       v-if="showCodeLogin || showQrcodeLogin"
-      class="mb-2 mt-4 flex items-center justify-between"
+      class="mt-4 mb-2 flex items-center justify-between"
     >
       <VbenButton
         v-if="showCodeLogin"
@@ -175,10 +175,10 @@ defineExpose({
       >
         {{ $t('authentication.qrcodeLogin') }}
       </VbenButton>
-    </div>
+    </div> -->
 
     <!-- 第三方登录 -->
-    <slot name="third-party-login">
+    <!-- <slot name="third-party-login">
       <ThirdPartyLogin
         v-if="showThirdPartyLogin"
         @third-login="handleThirdLogin"
@@ -195,9 +195,9 @@ defineExpose({
           {{ $t('authentication.createAccount') }}
         </span>
       </div>
-    </slot>
+    </slot> -->
 
     <!-- 萌新必读 -->
-    <DocLink />
+    <!-- <DocLink /> -->
   </div>
 </template>

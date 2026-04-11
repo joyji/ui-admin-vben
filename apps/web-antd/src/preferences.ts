@@ -16,6 +16,21 @@ export const overridesPreferences = defineOverridesPreferences({
         : 'backend',
     name: import.meta.env.VITE_APP_TITLE,
     enableRefreshToken: true,
+    layout: 'header-nav',
+  },
+  navigation: {
+    styleType: 'plain',
+  },
+  tabbar: {
+    showIcon: false,
+    showMaximize: false,
+    showMore: false,
+    styleType: 'brisk',
+    showMore: true
+  },
+  shortcutKeys: {
+    enable: false,
+    globalSearch: false
   },
   theme: {
     /** 默认白天模式 */
@@ -35,9 +50,19 @@ export const overridesPreferences = defineOverridesPreferences({
      * pc-biz 圆角：通用 2px → 0.125rem
      * 弹窗 6px/按钮 3px 由 CSS 单独设置
      */
-    radius: 0.125,
+    radius: '0.125rem',
     /** pc-biz 基础字号 13px */
     fontSize: 13,
+  },
+  widget: {
+    fullscreen: false,
+    languageToggle: false,
+    lockScreen: false,
+    notification: false,
+    refresh: false,
+    sidebarToggle: false,
+    themeToggle: false,
+    timezone: false,
   },
   footer: {
     /** 默认关闭 footer 页脚，因为有一定遮挡 */
@@ -46,6 +71,6 @@ export const overridesPreferences = defineOverridesPreferences({
   },
   copyright: {
     companyName: import.meta.env.VITE_APP_TITLE,
-    companySiteLink: 'https://gitee.com/yudaocode/yudao-ui-admin-vben',
+    companySiteLink: '',
   },
 });

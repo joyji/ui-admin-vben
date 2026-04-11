@@ -17,7 +17,7 @@ import { initComponentAdapter } from './adapter/component';
 import { initSetupVbenForm } from './adapter/form';
 import App from './app.vue';
 import { router } from './router';
-import { RoActionBar, RoFormFooter, RoFormGroup, RoFormPage } from './components/ro';
+import { RoActionBar, RoFormFooter, RoFormGroup, RoFormPage } from './ro-components';
 
 async function bootstrap(namespace: string) {
   // 初始化组件适配器

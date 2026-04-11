@@ -1,6 +1,6 @@
 {
   "name": "@vben/web-antd",
-  "version": "5.6.0",
+  "version": "5.7.0",
   "homepage": "https://vben.pro",
   "bugs": "https://github.com/vbenjs/vue-vben-admin/issues",
   "repository": {
@@ -19,8 +19,6 @@
     "build": "pnpm vite build --mode production",
     "build:analyze": "pnpm vite build --mode analyze",
     "dev": "pnpm vite --mode development",
-    "e2e:perf": "playwright test -c playwright.config.ts e2e/perf",
-    "e2e:perf:list": "playwright test -c playwright.config.ts e2e/perf --list",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit --skipLibCheck"
   },
