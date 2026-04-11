@@ -17,11 +17,6 @@ import { createApiEncrypt } from '@vben/utils';
 import { message } from 'ant-design-vue';
 
 import { useAuthStore } from '#/store';
-import {
-  buildUnmockedOfflineError,
-  resolveOfflineMock,
-  shouldUseOfflineMock,
-} from '#/mock/offline';
 
 import { refreshTokenApi } from './core';
 
@@ -92,6 +87,12 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
         ? accessStore.visitTenantId
         : undefined;
 
+      // 防止 GET 请求缓存（对齐 pc-biz-fcore service.ts）
+      if (config.method?.toUpperCase() === 'GET') {
+        config.headers['Cache-Control'] = 'no-cache';
+        config.headers['Pragma'] = 'no-cache';
+      }
+
       // 是否 API 加密
       if ((config.headers || {}).isEncrypt) {
         try {
@@ -113,6 +114,18 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
   // API 解密响应拦截器
   client.addResponseInterceptor({
     fulfilled: (response) => {
+      // 二进制数据直接返回（如 Excel 导出），对齐 pc-biz-fcore service.ts
+      const responseType = (response.config as any)?.responseType;
+      if (responseType === 'blob' || responseType === 'arraybuffer') {
+        // 若响应类型不是 json，则直接返回二进制数据
+        if (
+          !(response.data instanceof Blob) ||
+          response.data.type !== 'application/json'
+        ) {
+          return response.data;
+        }
+      }
+
       // 检查是否需要解密响应数据
       const encryptHeader = apiEncrypt.getEncryptHeader();
       const isEncryptResponse =
@@ -124,39 +137,12 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
           response.data = apiEncrypt.decryptResponse(response.data);
         } catch (error) {
           console.error('响应数据解密失败:', error);
-          throw new Error(`响应数据解密失败: ${(error as Error).message}`);
+          throw new Error(`响应数据解密失败: ${(error as Error).message}`, {
+            cause: error,
+          });
         }
       }
       return response;
-    },
-    rejected: (error) => {
-      if (!shouldUseOfflineMock()) {
-        return Promise.reject(error);
-      }
-      const method = error?.config?.method;
-      const url = error?.config?.url;
-      if (!method || !url) {
-        return Promise.reject(error);
-      }
-      const mocked = resolveOfflineMock(method, url);
-      if (!mocked) {
-        return Promise.reject({
-          ...error,
-          data: buildUnmockedOfflineError(method, url),
-          response: {
-            data: buildUnmockedOfflineError(method, url),
-            status: 501,
-          },
-        });
-      }
-      return Promise.resolve({
-        config: error.config,
-        data: mocked,
-        headers: {},
-        request: error.request,
-        status: 200,
-        statusText: 'OK',
-      });
     },
   });
 

@@ -1,5 +1,6 @@
 import type { PageParam, PageResult } from '@vben/request';
 
+import { mockDictDataSimpleListResponse } from '#/api/mock/login-flow-mock';
 import { requestClient } from '#/api/request';
 
 export namespace SystemDictDataApi {
@@ -19,10 +20,8 @@ export namespace SystemDictDataApi {
 }
 
 // 查询字典数据（精简)列表
-export function getSimpleDictDataList() {
-  return requestClient.get<SystemDictDataApi.DictData[]>(
-    '/system/dict-data/simple-list',
-  );
+export async function getSimpleDictDataList() {
+  return mockDictDataSimpleListResponse.data as SystemDictDataApi.DictData[];
 }
 
 // 查询字典数据列表

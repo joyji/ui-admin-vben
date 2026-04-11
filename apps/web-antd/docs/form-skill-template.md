@@ -15,7 +15,7 @@ UI 库       : Ant Design Vue 5（antd）
 布局        : 网格 grid-cols-12，默认 3 列（每列 col-span-4）
 字号        : 13px（font-family: "Microsoft YaHei"...）
 输入框高度  : 28px（antd token controlHeight=28）
-Label 宽度  : 100px，右对齐，无冒号（label::after display:none）
+Label 宽度  : 132px，左对齐，无冒号（label::after display:none）
 ```
 
 ---
@@ -103,11 +103,10 @@ src/views/<模块>/<页面>/
 【页面结构】
 <Page auto-content-height>
   <template #extra>  ← 页头右侧按钮（弱/次/强）
-  <div class="px-4 py-3">
+  <div>
     <a-collapse>     ← 折叠分组，默认展开
       <Form />       ← useVbenForm 渲染
     </a-collapse>
-    <底部操作栏>     ← sticky bottom，居中，取消/保存/提交
   </div>
 </Page>
 
@@ -333,7 +332,33 @@ const [Modal, modalApi] = useVbenModal({
 
 ---
 
-## 八、RoFormPage 标准组件（0 CSS 生成页面）
+## 八、Cursor Rule 配置（`.cursor/rules/form-skill.mdc`）
+
+将以下内容保存为 `.cursor/rules/form-skill.mdc`，让 Cursor AI 在生成表单代码时自动遵守规范：
+
+```markdown
+---
+description: 表单代码生成规范（Vben Admin 5.x + antd）
+globs:
+  - src/views/**/data.ts
+  - src/views/**/form.vue
+  - src/views/**/index.vue
+---
+
+生成表单代码时，严格遵守以下规范：
+1. Schema 文件命名：use<PageName>FormSchema()，导出自 data.ts
+2. 字段 component 只使用 adapter/component 已注册的类型
+3. 必填输入框用 rules: 'required'，必填选择框用 rules: 'selectRequired'
+4. 3 列布局：formItemClass 'col-span-4'，全宽 'col-span-12'
+5. 弹窗默认 2 列：formItemClass 'col-span-2'，labelWidth: 80
+6. 联动用 dependencies: { triggerFields, show/rules }
+7. 枚举常量放在 data.ts 顶部并 export
+8. 所有 API 调用写占位注释，不直接引入
+9. 类型定义 interface 放在 data.ts 末尾
+10. 页面组件 defineOptions({ name: 'XxxForm' })
+```
+
+# 八、RoFormPage 标准组件（0 CSS 生成页面）
 
 这是最关键的规范：**业务页面无需写任何 CSS**，只需使用以下 4 个全局注册组件。
 

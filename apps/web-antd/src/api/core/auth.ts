@@ -1,5 +1,9 @@
 import type { AuthPermissionInfo } from '@vben/types';
 
+import {
+  mockGetPermissionInfoResponse,
+  mockLoginResponse,
+} from '#/api/mock/login-flow-mock';
 import { baseRequestClient, requestClient } from '#/api/request';
 
 export namespace AuthApi {
@@ -63,12 +67,8 @@ export namespace AuthApi {
 }
 
 /** 登录 */
-export async function loginApi(data: AuthApi.LoginParams) {
-  return requestClient.post<AuthApi.LoginResult>('/system/auth/login', data, {
-    headers: {
-      isEncrypt: false,
-    },
-  });
+export async function loginApi(_data: AuthApi.LoginParams) {
+  return mockLoginResponse.data as AuthApi.LoginResult;
 }
 
 /** 刷新 accessToken */
@@ -93,9 +93,7 @@ export async function logoutApi(accessToken: string) {
 
 /** 获取权限信息 */
 export async function getAuthPermissionInfoApi() {
-  return requestClient.get<AuthPermissionInfo>(
-    '/system/auth/get-permission-info',
-  );
+  return mockGetPermissionInfoResponse.data as unknown as AuthPermissionInfo;
 }
 
 /** 获取租户列表 */
@@ -158,4 +156,17 @@ export async function socialLogin(data: AuthApi.SocialLoginParams) {
     '/system/auth/social-login',
     data,
   );
+}
+
+/** OneID SSO 登录 - 通过 OneID 回调的 code 获取 accessToken */
+export async function getOneIdAccessToken(
+  clientId: string,
+  code: string,
+  redirectUri: string,
+) {
+  return requestClient.post<AuthApi.LoginResult>('/system/auth/sso-login', {
+    clientId,
+    code,
+    redirectUri,
+  });
 }

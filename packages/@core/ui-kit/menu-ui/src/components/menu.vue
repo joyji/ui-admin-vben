@@ -212,15 +212,15 @@ const enableScroll = computed(
   () => props.scrollToActive && props.mode === 'vertical' && !props.collapse,
 );
 
-const { scrollToActiveItem } = useMenuScroll(activePath, {
+useMenuScroll(activePath, {
   enable: enableScroll,
   delay: 320,
 });
 
 // 监听 activePath 变化，自动滚动到激活项
-watch(activePath, () => {
-  scrollToActiveItem();
-});
+// watch(activePath, () => {
+//   scrollToActiveItem();
+// });
 
 // 默认展开菜单
 function initMenu() {
@@ -494,18 +494,18 @@ $namespace: vben;
 
   &.is-rounded {
     --menu-item-margin-x: 8px;
-    --menu-item-collapse-margin-x: 6px;
+    --menu-item-collapse-margin-x: 0;
     --menu-item-radius: 8px;
   }
 
   &.is-horizontal:not(.is-rounded) {
     --menu-item-height: 40px;
-    --menu-item-radius: 6px;
+    --menu-item-radius: 0px;
   }
 
   &.is-horizontal.is-rounded {
     --menu-item-height: 40px;
-    --menu-item-radius: 6px;
+    --menu-item-radius: 0px;
     --menu-item-padding-x: 12px;
   }
 
@@ -535,16 +535,25 @@ $namespace: vben;
     &.is-light {
       --menu-background-color: hsl(var(--menu));
       --menu-item-color: hsl(var(--accent-foreground));
-      --menu-item-background-color: var(--menu-background-color);
-      --menu-item-hover-color: hsl(var(--menu-item-color));
+      --menu-item-background-color: transparent;
+      --menu-item-hover-color: var(--menu-item-color);
       --menu-item-hover-background-color: hsl(var(--accent));
       --menu-item-active-color: hsl(var(--primary));
-      --menu-item-active-background-color: hsl(var(--primary) / 15%);
+      --menu-item-active-background-color: #E8F2FF;
       --menu-submenu-background-color: var(--menu-background-color);
       --menu-submenu-hover-color: hsl(var(--primary));
       --menu-submenu-hover-background-color: hsl(var(--accent));
       --menu-submenu-active-color: hsl(var(--primary));
-      --menu-submenu-active-background-color: hsl(var(--primary) / 15%);
+      --menu-submenu-active-background-color: #E8F2FF;
+
+      .#{$namespace}-menu-item,
+      .#{$namespace}-sub-menu-content {
+        font-weight: bold;
+      }
+
+      .#{$namespace}-menu__icon {
+        display: none;
+      }
     }
   }
 }
@@ -605,7 +614,7 @@ $namespace: vben;
       margin: 0;
       margin-right: 2px;
       // border-bottom: 2px solid transparent;
-      border-radius: var(--menu-item-radius);
+      // border-radius: var(--menu-item-radius);
     }
 
     & > .#{$namespace}-sub-menu {
@@ -621,7 +630,7 @@ $namespace: vben;
         height: 100%;
         padding-right: 40px;
         // border-bottom: 2px solid transparent;
-        border-radius: var(--menu-item-radius);
+        // border-radius: var(--menu-item-radius);
       }
     }
 
@@ -802,7 +811,8 @@ $namespace: vben;
   padding-left: 0;
   margin: 0;
   list-style: none;
-  background: var(--menu-submenu-background-color);
+  // background: var(--menu-submenu-background-color);
+  background: transparent;
   fill: var(--menu-item-color);
 
   &.is-active {
@@ -871,16 +881,14 @@ $namespace: vben;
   }
 
   &:not(.is-active):hover {
-    &:hover {
-      //color: var(--menu-submenu-hover-color);
-      text-decoration: none;
-      cursor: pointer;
-      background: var(--menu-submenu-hover-background-color) !important;
+    //color: var(--menu-submenu-hover-color);
+    text-decoration: none;
+    cursor: pointer;
+    background: var(--menu-submenu-hover-background-color) !important;
 
-      // svg {
-      //   fill: var(--menu-submenu-hover-color);
-      // }
-    }
+    // svg {
+    //   fill: var(--menu-submenu-hover-color);
+    // }
   }
 }
 </style>

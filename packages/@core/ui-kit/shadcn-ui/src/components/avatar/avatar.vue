@@ -1,3 +1,11 @@
+<!--
+ * @Description: 
+ * @version: 1.0.0
+ * @Author: jiying
+ * @Date: 2026-04-10 11:02:56
+ * @LastEditors: jiying
+ * @LastEditTime: 2026-04-10 14:36:10
+-->
 <script setup lang="ts">
 import type {
   AvatarFallbackProps,
@@ -43,7 +51,7 @@ const imageStyle = computed<CSSProperties>(() => {
 });
 
 const text = computed(() => {
-  return props.alt.slice(-2).toUpperCase();
+  return props.alt?.slice(-2).toUpperCase() ?? '';
 });
 
 const rootStyle = computed(() => {
@@ -60,7 +68,7 @@ const rootStyle = computed(() => {
   <div
     :class="props.class"
     :style="rootStyle"
-    class="relative flex flex-shrink-0 items-center"
+    class="relative flex shrink-0 items-center"
   >
     <Avatar :class="props.class" class="size-full">
       <AvatarImage :alt="alt" :src="src" :style="imageStyle" />
@@ -69,7 +77,7 @@ const rootStyle = computed(() => {
     <span
       v-if="dot"
       :class="dotClass"
-      class="absolute bottom-0 right-0 size-3 rounded-full border-2 border-background"
+      class="border-background absolute right-0 bottom-0 size-3 rounded-full border-2"
     >
     </span>
   </div>

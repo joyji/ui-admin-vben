@@ -36,7 +36,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/system/dict/type',
         name: 'OfflineSystemDictType',
-        component: () => import('#/views/system/dict/type/index.vue'),
+        component: () => import('#/views/system/dict/index.vue'),
         meta: {
           title: '字典类型',
         },
