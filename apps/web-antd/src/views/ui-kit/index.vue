@@ -1,5 +1,9 @@
 <script lang="ts" setup>
+import { Page } from '@vben/common-ui';
+import { IconifyIcon } from '@vben/icons';
 import { useRouter } from 'vue-router';
+
+import './ui-kit-demo.css';
 
 defineOptions({ name: 'UiKitIndex' });
 
@@ -9,8 +13,9 @@ interface Category {
   key: string;
   title: string;
   desc: string;
-  icon: string;
   path: string;
+  icon: string;
+  accent: string;
   items: string[];
 }
 
@@ -18,82 +23,92 @@ const categories: Category[] = [
   {
     key: 'button',
     title: '按钮类组件',
-    desc: '各类按钮形态、尺寸、图标、加载、分组等用法规范',
-    icon: '🖱️',
+    desc: '类型、尺寸、图标、Loading、按钮组与列表工具栏形态',
     path: '/ui-kit/button',
-    items: ['类型：主/次/虚线/文本/链接/危险', '尺寸：大/中/小', '图标按钮', 'Loading 状态', '按钮组', '工具栏按钮形态'],
+    icon: 'ant-design:interaction-outlined',
+    accent: 'linear-gradient(135deg, #0f56d5 0%, #3d7eef 100%)',
+    items: ['主/次/虚线/文本/链接', '尺寸与禁用', '图标按钮', 'Loading', '按钮组', '工具栏'],
   },
   {
     key: 'form-input',
     title: '文本录入类',
-    desc: '输入框、数字框、密码框、搜索框、多行文本及校验状态',
-    icon: '✏️',
+    desc: '输入框、数字、密码、搜索、多行文本与校验态',
     path: '/ui-kit/form-input',
-    items: ['Input 输入框', '前后缀', '密码/搜索', 'InputNumber 数字框', 'Textarea 多行', '校验状态（成功/错误/校验中）'],
+    icon: 'ant-design:edit-outlined',
+    accent: 'linear-gradient(135deg, #08979c 0%, #14c9c9 100%)',
+    items: ['Input', '前后缀', '密码/搜索', '数字', 'Textarea', '校验态'],
   },
   {
     key: 'form-select',
     title: '选择类组件',
-    desc: '下拉选择、级联、单选框、多选框、开关、滑块、评分',
-    icon: '🔽',
+    desc: '下拉、级联、单选/多选、开关、滑块与评分',
     path: '/ui-kit/form-select',
-    items: ['Select 单/多选', '可搜索 Select', 'Cascader 级联', 'Radio 单选组', 'Checkbox 多选组', 'Switch / Slider / Rate'],
+    icon: 'ant-design:unordered-list-outlined',
+    accent: 'linear-gradient(135deg, #722ed1 0%, #9254de 100%)',
+    items: ['Select', 'Cascader', 'Radio', 'Checkbox', 'Switch', 'Slider / Rate'],
   },
   {
     key: 'datetime',
     title: '时间类组件',
-    desc: '日期、时间、日期范围等各类时间选择器',
-    icon: '📅',
+    desc: '日期、时间、范围选择与各粒度 Picker',
     path: '/ui-kit/datetime',
-    items: ['DatePicker 日期', '月/年/周 选择', '日期 + 时间', 'RangePicker 范围', 'TimePicker 时间', '时间范围'],
+    icon: 'ant-design:calendar-outlined',
+    accent: 'linear-gradient(135deg, #d46b08 0%, #fa8c16 100%)',
+    items: ['DatePicker', '月/年/周', '日期时间', 'RangePicker', 'TimePicker', '时间范围'],
   },
   {
     key: 'table',
     title: '表格类组件',
-    desc: '列表表格、排序筛选、行选择、展开子表等',
-    icon: '📊',
+    desc: '排序、筛选、行选择、固定列、展开子表与空态',
     path: '/ui-kit/table',
-    items: ['基础表格', '排序与列筛选', '多选 / 单选行', '固定列 / 横向滚动', '展开子表格', '空数据 / Loading'],
+    icon: 'ant-design:table-outlined',
+    accent: 'linear-gradient(135deg, #006d75 0%, #08979c 100%)',
+    items: ['排序筛选', '行选择', '固定列', '展开子表', '分页', 'Loading'],
   },
   {
     key: 'dialog',
     title: '弹窗 / 反馈类',
-    desc: 'Modal、Drawer、Message、Notification、Alert、Popconfirm',
-    icon: '💬',
+    desc: 'Modal、Drawer、Message、Notification、Popconfirm、Alert',
     path: '/ui-kit/dialog',
-    items: ['Modal 普通弹窗', '表单弹窗（新增）', 'Drawer 抽屉', 'Message 全局提示', 'Notification 通知', 'Alert 警告 / Popconfirm'],
+    icon: 'ant-design:message-outlined',
+    accent: 'linear-gradient(135deg, #c41d7f 0%, #eb2f96 100%)',
+    items: ['Modal', '表单弹窗', 'Drawer', 'Message', 'Notification', 'Alert'],
   },
   {
     key: 'tree',
     title: '树组件',
-    desc: '树形展示、勾选、搜索过滤及树形下拉选择',
-    icon: '🌲',
+    desc: 'Tree、勾选、过滤、TreeSelect、DirectoryTree',
     path: '/ui-kit/tree',
-    items: ['Tree 基础树', '可勾选', '搜索过滤', 'TreeSelect 下拉', '多选 / 可勾选 TreeSelect', 'DirectoryTree'],
+    icon: 'ant-design:apartment-outlined',
+    accent: 'linear-gradient(135deg, #237804 0%, #52c41a 100%)',
+    items: ['基础树', '勾选', '过滤', 'TreeSelect', '多选', 'DirectoryTree'],
   },
   {
     key: 'upload',
     title: '上传 / 下载',
-    desc: '文件上传、拖拽上传、图片卡片、限制类型、下载触发',
-    icon: '📁',
+    desc: '点击上传、拖拽、图片卡片、类型限制与下载触发',
     path: '/ui-kit/upload',
-    items: ['Upload 基础上传', '拖拽上传', '图片卡片上传', '限制类型', '禁用状态', '下载按钮示例'],
+    icon: 'ant-design:upload-outlined',
+    accent: 'linear-gradient(135deg, #10239e 0%, #2f54eb 100%)',
+    items: ['基础上传', '拖拽', '图片卡片', '限制类型', '禁用', '下载'],
   },
   {
     key: 'layout',
     title: '布局类组件',
-    desc: '栅格、卡片、分割线、间距、Tabs、折叠面板、描述、步骤条',
-    icon: '🗂️',
+    desc: '栅格、卡片、分割线、间距、Tabs、折叠、描述、步骤条',
     path: '/ui-kit/layout',
-    items: ['Grid 栅格', 'Card 卡片', 'Divider 分割线', 'Space 间距', 'Tabs 标签页', 'Collapse 折叠 / Descriptions / Steps'],
+    icon: 'ant-design:layout-outlined',
+    accent: 'linear-gradient(135deg, #434343 0%, #8c8c8c 100%)',
+    items: ['Grid', 'Card', 'Divider', 'Space', 'Tabs', 'Collapse / Steps'],
   },
   {
     key: 'feedback',
     title: '反馈 / 展示类',
-    desc: '标签、徽标、进度条、加载、空状态、气泡、统计、结果页',
-    icon: '📣',
+    desc: 'Tag、Badge、Progress、Spin、Empty、Tooltip、Statistic、Result',
     path: '/ui-kit/feedback',
-    items: ['Tag / Badge', 'Progress 进度条', 'Spin 加载', 'Empty 空状态', 'Tooltip / Popover', 'Statistic / Result'],
+    icon: 'ant-design:bell-outlined',
+    accent: 'linear-gradient(135deg, #ad4e00 0%, #fa8c16 100%)',
+    items: ['Tag', 'Badge', 'Progress', 'Spin', 'Empty', 'Tooltip / Result'],
   },
 ];
 
@@ -104,135 +119,206 @@ function goDemo(path: string) {
 
 <template>
   <Page auto-content-height>
-    <div class="ui-kit-home">
-      <div class="ui-kit-home__header">
-        <h2 class="ui-kit-home__title">基础组件库</h2>
-        <p class="ui-kit-home__desc">
-          涵盖 10 大类基础组件，可基于这些组件进一步封装业务 Ro 组件。
-          点击分类卡片进入对应 Demo 页面。
-        </p>
-      </div>
-
-      <div class="ui-kit-home__grid">
-        <div
-          v-for="cat in categories"
-          :key="cat.key"
-          class="ui-kit-card"
-          @click="goDemo(cat.path)"
-        >
-          <div class="ui-kit-card__icon">{{ cat.icon }}</div>
-          <div class="ui-kit-card__content">
-            <div class="ui-kit-card__title">{{ cat.title }}</div>
-            <div class="ui-kit-card__desc">{{ cat.desc }}</div>
-            <ul class="ui-kit-card__items">
-              <li v-for="item in cat.items" :key="item">{{ item }}</li>
-            </ul>
+    <div class="ui-kit-page ui-kit-page--home">
+      <div class="ui-kit-page__inner">
+        <header class="ui-kit-home-hero">
+          <div class="ui-kit-home-hero__badge">
+            <IconifyIcon icon="ant-design:appstore-outlined" />
+            <span>组件演示</span>
           </div>
-          <div class="ui-kit-card__arrow">›</div>
+          <h1 class="ui-kit-home-hero__title">基础组件库</h1>
+          <p class="ui-kit-home-hero__desc">
+            共 10 个分类，每类独立 Demo 页。可在此基础上封装业务 Ro 组件。
+          </p>
+          <div class="ui-kit-home-hero__meta">
+            <span class="ui-kit-home-hero__pill">Ant Design Vue</span>
+            <span class="ui-kit-home-hero__pill">展示优先</span>
+            <span class="ui-kit-home-hero__pill">无业务接口</span>
+          </div>
+        </header>
+
+        <div class="ui-kit-home-grid">
+          <button
+            v-for="cat in categories"
+            :key="cat.key"
+            type="button"
+            class="ui-kit-home-card"
+            @click="goDemo(cat.path)"
+          >
+            <div class="ui-kit-home-card__accent" :style="{ background: cat.accent }" />
+            <div class="ui-kit-home-card__icon-wrap">
+              <IconifyIcon :icon="cat.icon" class="ui-kit-home-card__icon" />
+            </div>
+            <div class="ui-kit-home-card__body">
+              <h2 class="ui-kit-home-card__title">{{ cat.title }}</h2>
+              <p class="ui-kit-home-card__desc">{{ cat.desc }}</p>
+              <ul class="ui-kit-home-card__tags">
+                <li v-for="item in cat.items" :key="item">{{ item }}</li>
+              </ul>
+            </div>
+            <IconifyIcon icon="lucide:chevron-right" class="ui-kit-home-card__chevron" />
+          </button>
         </div>
       </div>
     </div>
   </Page>
 </template>
 
-<style>
-.ui-kit-home {
-  padding: 16px;
+<style scoped>
+.ui-kit-page--home {
+  padding-bottom: 48px;
 }
 
-.ui-kit-home__header {
-  margin-bottom: 20px;
+.ui-kit-home-hero {
+  padding: 28px 0 28px;
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 8px;
 }
 
-.ui-kit-home__title {
-  margin: 0 0 6px;
-  font-size: 18px;
+.ui-kit-home-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  color: #0f56d5;
+  background: rgba(15, 86, 213, 0.08);
+  border: 1px solid rgba(15, 86, 213, 0.15);
+  margin-bottom: 16px;
+}
+
+.ui-kit-home-hero__title {
+  margin: 0 0 10px;
+  font-size: 28px;
   font-weight: 700;
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(0, 0, 0, 0.88);
+  letter-spacing: -0.03em;
 }
 
-.ui-kit-home__desc {
-  margin: 0;
-  font-size: 13px;
+.ui-kit-home-hero__desc {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.65;
   color: rgba(0, 0, 0, 0.45);
 }
 
-.ui-kit-home__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 12px;
+.ui-kit-home-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
 }
 
-.ui-kit-card {
+.ui-kit-home-hero__pill {
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.ui-kit-home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.ui-kit-home-card {
+  position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
+  gap: 14px;
+  padding: 18px 18px 18px 16px;
+  text-align: left;
+  border: none;
+  border-radius: 12px;
   background: #ffffff;
-  border: 1px solid #e7e7e7;
-  border-radius: 2px;
   cursor: pointer;
-  transition: box-shadow 0.2s, border-color 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 32px rgba(15, 86, 213, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
-.ui-kit-card:hover {
-  border-color: #0f56d5;
-  box-shadow: 0 2px 8px rgba(15, 86, 213, 0.12);
+.ui-kit-home-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 16px 40px rgba(15, 86, 213, 0.12);
 }
 
-.ui-kit-card__icon {
-  font-size: 28px;
-  line-height: 1;
+.ui-kit-home-card__accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 12px 0 0 12px;
+}
+
+.ui-kit-home-card__icon-wrap {
   flex-shrink: 0;
-  padding-top: 2px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #f0f4fb 0%, #e8eef8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
 }
 
-.ui-kit-card__content {
+.ui-kit-home-card__icon {
+  font-size: 22px;
+  color: #0f56d5;
+}
+
+.ui-kit-home-card__body {
   flex: 1;
   min-width: 0;
 }
 
-.ui-kit-card__title {
-  font-size: 14px;
-  font-weight: 700;
-  color: rgba(0, 0, 0, 0.9);
-  margin-bottom: 4px;
+.ui-kit-home-card__title {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
 }
 
-.ui-kit-card__desc {
+.ui-kit-home-card__desc {
+  margin: 0 0 10px;
   font-size: 12px;
+  line-height: 1.55;
   color: rgba(0, 0, 0, 0.45);
-  margin-bottom: 8px;
-  line-height: 1.6;
 }
 
-.ui-kit-card__items {
+.ui-kit-home-card__tags {
   margin: 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 6px;
 }
 
-.ui-kit-card__items li {
+.ui-kit-home-card__tags li {
   font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(15, 86, 213, 0.06);
   color: rgba(0, 0, 0, 0.55);
-  background: #f5f7fa;
-  border-radius: 2px;
-  padding: 1px 6px;
-  white-space: nowrap;
 }
 
-.ui-kit-card__arrow {
-  font-size: 20px;
-  color: rgba(0, 0, 0, 0.2);
+.ui-kit-home-card__chevron {
   flex-shrink: 0;
   align-self: center;
-  transition: color 0.2s;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.2);
+  transition: color 0.2s, transform 0.2s;
 }
 
-.ui-kit-card:hover .ui-kit-card__arrow {
+.ui-kit-home-card:hover .ui-kit-home-card__chevron {
   color: #0f56d5;
+  transform: translateX(2px);
 }
 </style>

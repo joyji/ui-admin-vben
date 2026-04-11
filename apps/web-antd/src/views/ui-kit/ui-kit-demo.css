@@ -1,0 +1,118 @@
+/**
+ * 基础组件 Demo 展示页通用样式（仅 ui-kit 目录使用）
+ */
+.ui-kit-page {
+  min-height: 100%;
+  padding-bottom: 32px;
+  background: linear-gradient(180deg, #f0f4fb 0%, #f5f6f8 120px, #f5f6f8 100%);
+}
+
+.ui-kit-page__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.ui-kit-page__hero {
+  padding: 20px 0 16px;
+}
+
+.ui-kit-page__back {
+  margin-bottom: 12px;
+  padding: 0;
+  height: auto;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ui-kit-page__back:hover {
+  color: #0f56d5;
+}
+
+.ui-kit-page__title {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.88);
+  letter-spacing: -0.02em;
+}
+
+.ui-kit-page__sub {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ui-kit-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ui-kit-section {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 86, 213, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 24px rgba(15, 86, 213, 0.06);
+  overflow: hidden;
+}
+
+.ui-kit-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, rgba(15, 86, 213, 0.06) 0%, rgba(15, 86, 213, 0.02) 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ui-kit-section__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.ui-kit-section__hint {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ui-kit-section__body {
+  padding: 20px;
+}
+
+.ui-kit-section__body--flush {
+  padding: 0;
+}
+
+.ui-kit-section__body--flush .ui-kit-pad {
+  padding: 20px;
+}
+
+.ui-kit-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.ui-kit-muted {
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.ui-kit-form-wrap {
+  max-width: 640px;
+}
+
+.ui-kit-table-hint {
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+}
